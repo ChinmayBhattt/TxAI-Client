@@ -91,7 +91,6 @@ export default function Collections() {
             <div className="villa-img-wrapper">
               <img className="villa-img" src={v.image} alt={v.name} />
               <div className="villa-tag">{v.tag}</div>
-              <div className="villa-watermark">Staycation Villas</div>
             </div>
             <div className="villa-details">
               <div className="villa-location">{v.location}</div>

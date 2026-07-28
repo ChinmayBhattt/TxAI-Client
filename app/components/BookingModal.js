@@ -7,25 +7,23 @@ export default function BookingModal({
   isOpen,
   onClose,
   villa,
-  initialCheckIn = "2026-08-01",
-  initialCheckOut = "2026-08-03",
+  initialCheckIn = "",
+  initialCheckOut = "",
   initialGuests = 2,
 }) {
-  const [step, setStep] = useState(1); // 1: Details, 2: Payment (Razorpay/UPI), 3: Confirmation
+  const [step, setStep] = useState(1); // 1: Guest Details, 2: Confirmation
   const [checkIn, setCheckIn] = useState(initialCheckIn);
   const [checkOut, setCheckOut] = useState(initialCheckOut);
   const [guests, setGuests] = useState(initialGuests);
   const [guestName, setGuestName] = useState("");
   const [guestEmail, setGuestEmail] = useState("");
   const [guestPhone, setGuestPhone] = useState("");
-  const [paymentMethod, setPaymentMethod] = useState("razorpay"); // 'razorpay' | 'qr' | 'intent'
-  const [vpaId, setVpaId] = useState("");
   const [bookingId, setBookingId] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [timeLeft, setTimeLeft] = useState(600); // 10 mins timer
+  const [paymentId, setPaymentId] = useState("");
 
-  // Update initial props when changed
+  // Sync with sidebar values when modal opens
   useEffect(() => {
     if (initialCheckIn) setCheckIn(initialCheckIn);
     if (initialCheckOut) setCheckOut(initialCheckOut);
@@ -44,12 +42,11 @@ export default function BookingModal({
   const nights = calculateNights();
   const baseRate = parseInt(villa?.price?.replace(/[^0-9]/g, "") || "22000", 10);
   const subtotal = baseRate * nights;
-  const taxes = Math.round(subtotal * 0.18); // 18% GST
+  const taxes = Math.round(subtotal * 0.18);
   const totalAmount = subtotal + taxes;
 
   useEffect(() => {
     if (isOpen) {
-      // Auto-fill user if logged in
       supabase.auth.getUser().then(({ data: { user } }) => {
         if (user) {
           setGuestEmail(user.email || "");
@@ -57,20 +54,12 @@ export default function BookingModal({
         }
       });
     } else {
-      // Reset modal state
       setStep(1);
       setError("");
       setLoading(false);
+      setPaymentId("");
     }
   }, [isOpen]);
-
-  useEffect(() => {
-    let timer;
-    if (step === 2 && timeLeft > 0) {
-      timer = setInterval(() => setTimeLeft((prev) => prev - 1), 1000);
-    }
-    return () => clearInterval(timer);
-  }, [step, timeLeft]);
 
   if (!isOpen || !villa) return null;
 
@@ -79,32 +68,38 @@ export default function BookingModal({
     return `BK-${random}`;
   };
 
-  const handleProceedToPayment = (e) => {
+  // ─── STEP 1 → Validate details, then launch Razorpay immediately ───
+  const handlePayNow = async (e) => {
     e.preventDefault();
     if (!guestName || !guestEmail || !guestPhone) {
       setError("Please fill in all guest details.");
       return;
     }
+    if (!checkIn || !checkOut) {
+      setError("Please select check-in and check-out dates.");
+      return;
+    }
+    const start = new Date(checkIn);
+    const end = new Date(checkOut);
+    if (end <= start) {
+      setError("Check-out date must be after check-in date.");
+      return;
+    }
+
     setError("");
+    setLoading(true);
+
     const newBookingId = generateBookingId();
     setBookingId(newBookingId);
-    setStep(2);
-    setTimeLeft(600);
-  };
-
-  // Launch official Razorpay Checkout SDK
-  const handleRazorpayPayment = async () => {
-    setLoading(true);
-    setError("");
 
     try {
-      // 1. Create order on server
+      // 1. Create Razorpay order on server
       const res = await fetch("/api/razorpay/order", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           amount: totalAmount,
-          bookingId: bookingId,
+          bookingId: newBookingId,
           villaName: villa.name,
         }),
       });
@@ -114,125 +109,126 @@ export default function BookingModal({
         throw new Error(orderData.error || "Order creation failed");
       }
 
-      // 2. Configure Razorpay SDK options
+      // 2. Open Razorpay Checkout — UPI only
       const options = {
-        key: orderData.keyId || "rzp_test_TJ0s4Jf9hX9tiU",
+        key: orderData.keyId,
         amount: orderData.amount,
         currency: orderData.currency,
         name: "Staycation Villas",
-        description: `Booking ${bookingId} - ${villa.name}`,
-        image: "/images/vistara-1.png",
+        description: `Booking ${newBookingId} – ${villa.name}`,
         order_id: orderData.orderId,
         prefill: {
           name: guestName,
           email: guestEmail,
           contact: guestPhone,
         },
-        theme: {
-          color: "#d4874e",
+        notes: {
+          bookingId: newBookingId,
+          villaName: villa.name,
+          checkIn,
+          checkOut,
         },
+        theme: { color: "#d4874e" },
+
+        // ── On successful payment ──
         handler: async function (response) {
-          // Success callback
-          await handleConfirmSuccess(response.razorpay_payment_id || "PAY_" + Date.now());
+          // response.razorpay_payment_id is set ONLY when Razorpay
+          // actually captured the payment on their end.
+          const rpPaymentId = response.razorpay_payment_id;
+          setPaymentId(rpPaymentId);
+
+          // Save booking in Supabase
+          try {
+            const { data: { user } } = await supabase.auth.getUser();
+
+            await supabase.from("bookings").insert([{
+              booking_id: newBookingId,
+              villa_name: villa.name,
+              villa_slug: villa.slug,
+              check_in: checkIn,
+              check_out: checkOut,
+              guests,
+              guest_name: guestName,
+              guest_email: guestEmail,
+              guest_phone: guestPhone,
+              total_amount: totalAmount,
+              payment_method: "Razorpay UPI",
+              razorpay_order_id: orderData.orderId,
+              razorpay_payment_id: rpPaymentId,
+              status: "confirmed",
+              user_id: user ? user.id : null,
+              created_at: new Date().toISOString(),
+            }]);
+          } catch (dbErr) {
+            console.log("DB write fallback:", dbErr);
+          }
+
+          // Move to confirmation screen
+          setStep(2);
+          setLoading(false);
         },
+
+        // ── User dismissed checkout without paying ──
         modal: {
           ondismiss: function () {
             setLoading(false);
+            // Booking stays pending — nothing is confirmed
           },
         },
       };
 
-      if (window.Razorpay) {
-        const rzp = new window.Razorpay(options);
-        rzp.open();
-      } else {
-        // Fallback if Razorpay SDK script isn't loaded yet
-        await handleConfirmSuccess("PAY_RAZORPAY_TEST");
-      }
+      const rzp = new window.Razorpay(options);
+
+      // Handle payment failure from gateway
+      rzp.on("payment.failed", function (response) {
+        setError(
+          response.error?.description ||
+            "Payment failed. Please try again."
+        );
+        setLoading(false);
+      });
+
+      rzp.open();
     } catch (err) {
-      setError(err.message || "Failed to initiate Razorpay payment.");
+      setError(err.message || "Something went wrong. Please try again.");
       setLoading(false);
     }
-  };
-
-  const handleConfirmSuccess = async (paymentRef) => {
-    setLoading(true);
-    try {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-
-      const bookingRecord = {
-        booking_id: bookingId,
-        villa_name: villa.name,
-        villa_slug: villa.slug,
-        check_in: checkIn,
-        check_out: checkOut,
-        guests: guests,
-        guest_name: guestName,
-        guest_email: guestEmail,
-        guest_phone: guestPhone,
-        total_amount: totalAmount,
-        payment_method: "Razorpay / UPI",
-        payment_reference: paymentRef,
-        status: "confirmed",
-        user_id: user ? user.id : null,
-        created_at: new Date().toISOString(),
-      };
-
-      try {
-        await supabase.from("bookings").insert([bookingRecord]);
-      } catch (dbErr) {
-        console.log("Supabase db write fallback:", dbErr);
-      }
-
-      setStep(3);
-    } catch (err) {
-      setError("Verification error.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const formatTimer = (seconds) => {
-    const m = Math.floor(seconds / 60);
-    const s = seconds % 60;
-    return `${m}:${s < 10 ? "0" : ""}${s}`;
   };
 
   const downloadReceipt = () => {
     const content = `
 ==================================================
-           STAYCATION VILLAS - RECEIPT
+           STAYCATION VILLAS — RECEIPT
 ==================================================
-Booking ID:     ${bookingId}
-Date:           ${new Date().toLocaleDateString()}
-Status:         CONFIRMED (Razorpay / UPI Paid)
+Booking ID:       ${bookingId}
+Date:             ${new Date().toLocaleDateString("en-IN")}
+Status:           ✅ CONFIRMED
 --------------------------------------------------
-PROPERTY DETAILS
-Villa:          ${villa.name}
-Location:       ${villa.location}
-Check-In:       ${checkIn} (From 2:00 PM)
-Check-Out:      ${checkOut} (Until 11:00 AM)
-Nights:         ${nights} Night(s)
-Guests:         ${guests} Guest(s)
+PROPERTY
+Villa:            ${villa.name}
+Location:         ${villa.location}
+Check-In:         ${checkIn}  (2:00 PM)
+Check-Out:        ${checkOut}  (11:00 AM)
+Nights:           ${nights}
+Guests:           ${guests}
 --------------------------------------------------
-GUEST DETAILS
-Name:           ${guestName}
-Email:          ${guestEmail}
-Phone:          ${guestPhone}
+GUEST
+Name:             ${guestName}
+Email:            ${guestEmail}
+Phone:            ${guestPhone}
 --------------------------------------------------
 PAYMENT BREAKDOWN
-Base Rate:      ₹${subtotal.toLocaleString("en-IN")} (${nights} night(s) x ₹${baseRate.toLocaleString("en-IN")})
-GST (18%):      ₹${taxes.toLocaleString("en-IN")}
---------------------------------------------------
-TOTAL PAID:     ₹${totalAmount.toLocaleString("en-IN")}
-Payment Gateway: Razorpay (rzp_test_TJ0s4Jf9hX9tiU)
+Base Rate:        ₹${subtotal.toLocaleString("en-IN")}  (${nights} × ₹${baseRate.toLocaleString("en-IN")})
+GST (18%):        ₹${taxes.toLocaleString("en-IN")}
+                  ────────────
+TOTAL PAID:       ₹${totalAmount.toLocaleString("en-IN")}
+Payment Ref:      ${paymentId}
+Gateway:          Razorpay
 ==================================================
 Thank you for choosing Staycation Villas!
-Need help? Call +91 8169019090 or email reservations@ekostay.com
+Support: +91 8169019090 | reservations@ekostay.com
 ==================================================
-    `;
+    `.trim();
 
     const blob = new Blob([content], { type: "text/plain" });
     const url = URL.createObjectURL(blob);
@@ -252,7 +248,7 @@ Need help? Call +91 8169019090 or email reservations@ekostay.com
           ✕
         </button>
 
-        {/* STEP 1: GUEST DETAILS & CALCULATION */}
+        {/* ─── STEP 1: DETAILS + PAY ─── */}
         {step === 1 && (
           <div>
             <div className="bm-header">
@@ -261,7 +257,7 @@ Need help? Call +91 8169019090 or email reservations@ekostay.com
               <p className="bm-loc">📍 {villa.location}</p>
             </div>
 
-            <form onSubmit={handleProceedToPayment} className="bm-form">
+            <form onSubmit={handlePayNow} className="bm-form">
               {error && <div className="bm-alert-error">{error}</div>}
 
               <div className="bm-row-2">
@@ -305,7 +301,7 @@ Need help? Call +91 8169019090 or email reservations@ekostay.com
                 <label>FULL NAME</label>
                 <input
                   type="text"
-                  placeholder="Enter your name"
+                  placeholder="Enter your full name"
                   value={guestName}
                   onChange={(e) => setGuestName(e.target.value)}
                   required
@@ -335,12 +331,10 @@ Need help? Call +91 8169019090 or email reservations@ekostay.com
                 </div>
               </div>
 
-              {/* Price Summary */}
+              {/* Live price summary */}
               <div className="bm-price-box">
                 <div className="bm-price-row">
-                  <span>
-                    ₹{baseRate.toLocaleString("en-IN")} × {nights} night(s)
-                  </span>
+                  <span>₹{baseRate.toLocaleString("en-IN")} × {nights} night{nights > 1 ? "s" : ""}</span>
                   <span>₹{subtotal.toLocaleString("en-IN")}</span>
                 </div>
                 <div className="bm-price-row">
@@ -354,75 +348,11 @@ Need help? Call +91 8169019090 or email reservations@ekostay.com
                 </div>
               </div>
 
-              <button type="submit" className="bm-primary-btn">
-                PROCEED TO PAYMENT →
-              </button>
-            </form>
-          </div>
-        )}
-
-        {/* STEP 2: RAZORPAY / UPI PAYMENT SHEET */}
-        {step === 2 && (
-          <div>
-            <div className="bm-header">
-              <div className="bm-upi-badge">💳 RAZORPAY &amp; UPI PAYMENT</div>
-              <h2 className="bm-title">Pay Fixed Amount</h2>
-              <div className="bm-amount-tag">
-                ₹{totalAmount.toLocaleString("en-IN")}{" "}
-                <small>(Fixed Amount)</small>
-              </div>
-              <div className="bm-timer-text">
-                ⏱️ Session expires in: <strong>{formatTimer(timeLeft)}</strong>
-              </div>
-            </div>
-
-            {error && <div className="bm-alert-error">{error}</div>}
-
-            {/* Payment Mode Tabs */}
-            <div className="bm-pay-methods">
-              <button
-                className={`bm-pay-tab ${
-                  paymentMethod === "razorpay" ? "active" : ""
-                }`}
-                onClick={() => setPaymentMethod("razorpay")}
-              >
-                💳 Razorpay (UPI/Cards)
-              </button>
-              <button
-                className={`bm-pay-tab ${paymentMethod === "qr" ? "active" : ""}`}
-                onClick={() => setPaymentMethod("qr")}
-              >
-                📲 Scan QR Code
-              </button>
-            </div>
-
-            {/* Razorpay Direct Checkout */}
-            {paymentMethod === "razorpay" && (
-              <div className="bm-intent-box" style={{ textAlign: "center", padding: "16px 0" }}>
-                <p className="bm-intent-subtitle">
-                  Click below to open standard Razorpay UPI Payment Gateway:
-                </p>
-
-                <div className="bm-rzp-info-box">
-                  <div>🔑 <strong>Key ID:</strong> rzp_test_TJ0s4Jf9hX9tiU</div>
-                  <div>🏨 <strong>Stay:</strong> {villa.name}</div>
-                  <div>📅 <strong>Dates:</strong> {checkIn} to {checkOut} ({nights} nights)</div>
+              {/* QR Code + UPI Apps */}
+              <div className="bm-qr-section">
+                <div className="bm-qr-or-line">
+                  <span>SCAN &amp; PAY VIA UPI</span>
                 </div>
-
-                <button
-                  onClick={handleRazorpayPayment}
-                  className="bm-primary-btn"
-                  disabled={loading}
-                  style={{ marginTop: "16px" }}
-                >
-                  {loading ? "Launching Gateway..." : "PAY WITH RAZORPAY →"}
-                </button>
-              </div>
-            )}
-
-            {/* QR Code Scan Option */}
-            {paymentMethod === "qr" && (
-              <div className="bm-qr-box">
                 <div className="bm-qr-img-wrapper">
                   <img
                     src="/images/qr.jpeg"
@@ -430,8 +360,8 @@ Need help? Call +91 8169019090 or email reservations@ekostay.com
                     className="bm-qr-img"
                   />
                 </div>
-                <p className="bm-qr-hint">
-                  Scan this QR code using any UPI app (GPay, PhonePe, Paytm, BHIM)
+                <p className="bm-qr-amount-note">
+                  Amount: <strong>₹{totalAmount.toLocaleString("en-IN")}</strong>
                 </p>
                 <div className="bm-upi-apps-icons">
                   <span className="upi-app-badge gpay">GPay</span>
@@ -439,22 +369,31 @@ Need help? Call +91 8169019090 or email reservations@ekostay.com
                   <span className="upi-app-badge paytm">Paytm</span>
                   <span className="upi-app-badge bhim">BHIM</span>
                 </div>
-
-                <button
-                  onClick={() => handleConfirmSuccess("UPI_QR_" + Date.now())}
-                  className="bm-primary-btn"
-                  disabled={loading}
-                  style={{ marginTop: "20px" }}
-                >
-                  {loading ? "Verifying..." : "I HAVE SCANNED & PAID ✓"}
-                </button>
               </div>
-            )}
+
+              <div className="bm-qr-or-line">
+                <span>OR PAY VIA GATEWAY</span>
+              </div>
+
+              <button
+                type="submit"
+                className="bm-primary-btn"
+                disabled={loading}
+              >
+                {loading
+                  ? "OPENING PAYMENT GATEWAY..."
+                  : `PAY ₹${totalAmount.toLocaleString("en-IN")} WITH RAZORPAY →`}
+              </button>
+
+              <p className="bm-secure-note">
+                🔒 Secured by Razorpay · UPI / Cards / Netbanking
+              </p>
+            </form>
           </div>
         )}
 
-        {/* STEP 3: BOOKING CONFIRMATION & RECEIPT */}
-        {step === 3 && (
+        {/* ─── STEP 2: CONFIRMATION (only after real payment) ─── */}
+        {step === 2 && (
           <div className="bm-confirm-box">
             <div className="bm-check-icon">✓</div>
             <span className="bm-subtitle">PAYMENT VERIFIED &amp; CONFIRMED</span>
@@ -472,11 +411,11 @@ Need help? Call +91 8169019090 or email reservations@ekostay.com
               <div className="bm-confirm-row">
                 <span>Dates:</span>
                 <strong>
-                  {checkIn} to {checkOut} ({nights} Night{nights > 1 ? "s" : ""})
+                  {checkIn} → {checkOut} ({nights} Night{nights > 1 ? "s" : ""})
                 </strong>
               </div>
               <div className="bm-confirm-row">
-                <span>Guest Name:</span>
+                <span>Guest:</span>
                 <strong>{guestName}</strong>
               </div>
               <div className="bm-confirm-row">
@@ -485,6 +424,14 @@ Need help? Call +91 8169019090 or email reservations@ekostay.com
                   ₹{totalAmount.toLocaleString("en-IN")}
                 </strong>
               </div>
+              {paymentId && (
+                <div className="bm-confirm-row">
+                  <span>Payment Ref:</span>
+                  <strong style={{ fontSize: 11, wordBreak: "break-all" }}>
+                    {paymentId}
+                  </strong>
+                </div>
+              )}
             </div>
 
             <div className="bm-confirm-actions">

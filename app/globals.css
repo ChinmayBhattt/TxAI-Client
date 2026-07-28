@@ -4933,6 +4933,50 @@ img {
   font-family: var(--font-body);
 }
 
+.bm-secure-note {
+  text-align: center;
+  font-size: 11px;
+  color: var(--color-text-muted);
+  margin-top: 8px;
+  letter-spacing: 0.5px;
+}
 
+.bm-qr-section {
+  text-align: center;
+  margin-top: 8px;
+}
 
+.bm-qr-or-line {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.bm-qr-or-line::before,
+.bm-qr-or-line::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--color-border);
+}
+
+.bm-qr-or-line span {
+  font-size: 10px;
+  letter-spacing: 2px;
+  font-weight: 700;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+.bm-qr-amount-note {
+  font-size: 13px;
+  color: var(--color-text-light);
+  margin-bottom: 10px;
+}
+
+.bm-qr-amount-note strong {
+  color: var(--color-primary);
+  font-size: 16px;
+}
 

@@ -16,7 +16,7 @@ const features = [
         <path d="M9 21v-6h6v6" />
       </svg>
     ),
-    title: "175+ Staycation Villas Managed Villas",
+    title: " Staycation Villas Managed Villas",
     desc: "A growing portfolio of homes we run end to end.",
   },
   {
@@ -26,8 +26,8 @@ const features = [
         <path d="M2 10h20" />
       </svg>
     ),
-    title: "Airpay Secured Payments",
-    desc: "Every booking protected by encrypted Airpay checkout.",
+    title: "Razorpay Secured Payments",
+    desc: "Every booking protected by encrypted Razorpay checkout.",
   },
   {
     icon: (

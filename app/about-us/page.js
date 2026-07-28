@@ -131,7 +131,7 @@ export default function AboutUsPage() {
             <div className="timeline-item">
               <div className="timeline-content">
                 <span className="timeline-year">2025+</span>
-                <h3 className="timeline-title">175+ Managed Villas &amp; Beyond</h3>
+                <h3 className="timeline-title"> Managed Villas &amp; Beyond</h3>
                 <p>
                   Today, EkoStay stands as a nation-wide brand with over 800,000+
                   happy guests hosted. With standard services, end-to-end management,
@@ -140,7 +140,7 @@ export default function AboutUsPage() {
                 </p>
               </div>
               <div className="timeline-media">
-                <img src="/images/eko-luxe.png" alt="175+ managed villas" />
+                <img src="/images/eko-luxe.png" alt=" managed villas" />
               </div>
             </div>
           </div>
