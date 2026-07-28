@@ -56,32 +56,30 @@ export default function Footer() {
         <div className="footer-links-col">
           <h4 className="footer-heading">Quick Links</h4>
           <ul className="footer-list">
-            <li><a href="#">About Us</a></li>
-            <li><a href="#">Eko Gold</a></li>
-            <li><a href="#">Eko Luxe</a></li>
-            <li><a href="#">Membership</a></li>
-            <li><a href="#">Partner With Us</a></li>
-            <li><a href="#">Careers</a></li>
-            <li><a href="#">Blog</a></li>
+            <li><a href="/about-us">About Us (Our Story)</a></li>
+            <li><a href="/ourteam">Our Team</a></li>
+            <li><a href="/collections">Eko Gold</a></li>
+            <li><a href="/collections">Eko Luxe</a></li>
+            <li><a href="/ourteam">Careers</a></li>
+            <li><a href="/contact">Contact Us</a></li>
           </ul>
         </div>
 
         <div className="footer-links-col">
           <h4 className="footer-heading">Support</h4>
           <ul className="footer-list">
-            <li><a href="#">Help Centre</a></li>
+            <li><a href="/contact">Help Centre</a></li>
             <li><a href="#">Cancellation Policy</a></li>
             <li><a href="#">Terms &amp; Conditions</a></li>
             <li><a href="#">Privacy Policy</a></li>
-            <li><a href="#">FAQs</a></li>
           </ul>
           <h4 className="footer-heading" style={{ marginTop: "24px" }}>Contact</h4>
           <ul className="footer-list">
             <li>
-              <a href="tel:+919876543210">+91 98765 43210</a>
+              <a href="tel:+918169019090">+91 8169019090</a>
             </li>
             <li>
-              <a href="mailto:hello@Staycation Villas.com">hello@Staycation Villas.com</a>
+              <a href="mailto:reservations@ekostay.com">reservations@ekostay.com</a>
             </li>
           </ul>
         </div>

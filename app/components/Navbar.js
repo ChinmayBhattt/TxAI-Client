@@ -5,17 +5,17 @@ import { supabase } from "../../lib/supabaseClient";
 import AuthModal from "./AuthModal";
 
 const collectionsLinks = [
-  { name: "Mountain View Villas", href: "#" },
-  { name: "Water View Villas", href: "#" },
-  { name: "Hidden Gems", href: "#" },
-  { name: "Senior Citizen Friendly", href: "#" },
-  { name: "Couples Friendly", href: "#" },
-  { name: "Kids Friendly", href: "#" },
+  { name: "Mountain View Villas", href: "/collections/mountain-view-villas" },
+  { name: "Water View Villas", href: "/collections/water-view-villas" },
+  { name: "Hidden Gems", href: "/collections/hidden-gems" },
+  { name: "Senior Citizen Friendly", href: "/collections/senior-citizen-friendly" },
+  { name: "Couples Friendly", href: "/collections/couples-friendly" },
+  { name: "Kids Friendly", href: "/collections/kids-friendly" },
 ];
 
 const luxuryLinks = [
-  { name: "Eko Gold — Signature", href: "#" },
-  { name: "Eko Luxe — Ultra Luxury", href: "#" },
+  { name: "Eko Gold — Signature", href: "/collections" },
+  { name: "Eko Luxe — Ultra Luxury", href: "/collections" },
 ];
 
 const featuredVillas = [
@@ -24,10 +24,10 @@ const featuredVillas = [
 ];
 
 const aboutLinks = [
-  { name: "Our Story", href: "#" },
-  { name: "Blog", href: "#" },
-  { name: "Careers", href: "#" },
-  { name: "Contact Us", href: "#" },
+  { name: "Our Story", href: "/about-us" },
+  { name: "Our Team", href: "/ourteam" },
+  { name: "Careers", href: "/ourteam" },
+  { name: "Contact Us", href: "/contact" },
 ];
 
 function Dropdown({ children, isOpen }) {
