@@ -15,6 +15,26 @@ const tabs = [
 
 const villas = [
   {
+    name: "Vistara Villa",
+    location: "Igatpuri",
+    bhk: 4,
+    bath: 4,
+    price: "₹22,000",
+    image: "/images/vistara-hero.png",
+    tag: "Mountain View Villas",
+    slug: "vistara-villa",
+  },
+  {
+    name: "Amora Villa",
+    location: "Alibaug",
+    bhk: 5,
+    bath: 5,
+    price: "₹30,000",
+    image: "/images/amora-hero.png",
+    tag: "Water View Villas",
+    slug: "amora-villa",
+  },
+  {
     name: "Brooklyn",
     location: "Igatpuri",
     bhk: 6,
@@ -97,37 +117,42 @@ export default function Collections() {
       </div>
 
       <div className="villas-grid">
-        {villas.map((v, i) => (
-          <div key={i} className="villa-card">
-            <div className="villa-img-wrapper">
-              <img className="villa-img" src={v.image} alt={v.name} />
-              <div className="villa-tag">{v.tag}</div>
-              <div className="villa-watermark">EKOSTAY</div>
-            </div>
-            <div className="villa-details">
-              <div className="villa-location">{v.location}</div>
-              <div className="villa-name">{v.name}</div>
-              <div className="villa-specs">
-                <div className="villa-spec">
-                  <BedIcon />
-                  {v.bhk} BHK
+        {villas.map((v, i) => {
+          const CardWrapper = v.slug ? "a" : "div";
+          const cardProps = v.slug ? { href: `/villa/${v.slug}` } : {};
+
+          return (
+            <CardWrapper key={i} className="villa-card" {...cardProps} style={{ textDecoration: "none", color: "inherit" }}>
+              <div className="villa-img-wrapper">
+                <img className="villa-img" src={v.image} alt={v.name} />
+                <div className="villa-tag">{v.tag}</div>
+                <div className="villa-watermark">Staycation Villas</div>
+              </div>
+              <div className="villa-details">
+                <div className="villa-location">{v.location}</div>
+                <div className="villa-name">{v.name}</div>
+                <div className="villa-specs">
+                  <div className="villa-spec">
+                    <BedIcon />
+                    {v.bhk} BHK
+                  </div>
+                  <div className="villa-spec">
+                    <BathIcon />
+                    {v.bath} Bath
+                  </div>
                 </div>
-                <div className="villa-spec">
-                  <BathIcon />
-                  {v.bath} Bath
+                <div className="villa-footer">
+                  <div className="villa-price">
+                    {v.price} <span>/night</span>
+                  </div>
+                  <span className="villa-view">
+                    View →
+                  </span>
                 </div>
               </div>
-              <div className="villa-footer">
-                <div className="villa-price">
-                  {v.price} <span>/night</span>
-                </div>
-                <a href="#" className="villa-view">
-                  View →
-                </a>
-              </div>
-            </div>
-          </div>
-        ))}
+            </CardWrapper>
+          );
+        })}
       </div>
     </section>
   );

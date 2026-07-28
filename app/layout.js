@@ -1,18 +1,18 @@
 import "./globals.css";
 
 export const metadata = {
-  title: "EkoStay — Luxury & Affordable Villas for Rent in India",
+  title: "Staycation Villas - Stay Relax",
   description:
     "Handpicked staycations across India. Book luxury villas, holiday homes, and premium stays in Goa, Alibaug, Lonavala, Igatpuri, Karjat, and more.",
   keywords:
-    "villas in India, luxury villas, holiday homes, Goa villas, Alibaug villas, Lonavala stays, EkoStay, staycation India",
+    "villas in India, luxury villas, holiday homes, Goa villas, Alibaug villas, Lonavala stays, Staycation Villas, staycation India",
   openGraph: {
-    title: "EkoStay — Luxury & Affordable Villas for Rent in India",
+    title: "Staycation Villas - Stay Relax",
     description:
       "Handpicked staycations across India. Book luxury villas and holiday homes in Goa, Alibaug, Lonavala, and more.",
     type: "website",
     locale: "en_IN",
-    siteName: "EkoStay",
+    siteName: "Staycation Villas",
   },
 };
 

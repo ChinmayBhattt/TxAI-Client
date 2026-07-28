@@ -4,7 +4,7 @@ export default function Footer() {
       <div className="footer-inner">
         {/* Brand column */}
         <div className="footer-brand">
-          <div className="footer-logo">EKOSTAY</div>
+          <div className="footer-logo">Staycation Villas</div>
           <p className="footer-tagline">Click. Book. Holiday.</p>
           <p className="footer-desc">
             India&apos;s most trusted villa holiday brand. Handpicked stays
@@ -81,7 +81,7 @@ export default function Footer() {
               <a href="tel:+919876543210">+91 98765 43210</a>
             </li>
             <li>
-              <a href="mailto:hello@ekostay.com">hello@ekostay.com</a>
+              <a href="mailto:hello@Staycation Villas.com">hello@Staycation Villas.com</a>
             </li>
           </ul>
         </div>
@@ -91,7 +91,7 @@ export default function Footer() {
       <div className="footer-bottom">
         <div className="footer-bottom-inner">
           <p className="footer-copyright">
-            © 2025 EkoStay. All rights reserved.
+            © 2025 Staycation Villas. All rights reserved.
           </p>
           <div className="footer-payment">
             <span className="payment-label">We accept</span>

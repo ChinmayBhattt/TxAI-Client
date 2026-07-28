@@ -19,7 +19,7 @@ export default function Premium() {
       <div className="watermark-bg">EKO</div>
       <div className="premium-inner">
         <div className="section-subtitle" style={{ textAlign: "center" }}>
-          Premium Collections By EkoStay
+          Premium Collections By Staycation Villas
         </div>
         <h2
           className="section-title"

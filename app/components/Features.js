@@ -7,7 +7,7 @@ const features = [
       </svg>
     ),
     title: "Standardised Service & Amenities",
-    desc: "The same trusted comforts in every Ekostay villa.",
+    desc: "The same trusted comforts in every Staycation Villas villa.",
   },
   {
     icon: (
@@ -16,7 +16,7 @@ const features = [
         <path d="M9 21v-6h6v6" />
       </svg>
     ),
-    title: "175+ Ekostay Managed Villas",
+    title: "175+ Staycation Villas Managed Villas",
     desc: "A growing portfolio of homes we run end to end.",
   },
   {
