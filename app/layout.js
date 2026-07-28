@@ -1,4 +1,5 @@
 import "./globals.css";
+import Script from "next/script";
 
 export const metadata = {
   title: "Staycation Villas - Stay Relax",
@@ -28,7 +29,10 @@ export default function RootLayout({ children }) {
         />
         <meta name="theme-color" content="#1a1a1a" />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="lazyOnload" />
+      </body>
     </html>
   );
 }

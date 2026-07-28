@@ -17,58 +17,22 @@ const villas = [
   {
     name: "Vistara Villa",
     location: "Igatpuri",
-    bhk: 4,
-    bath: 4,
+    bhk: 3,
+    bath: 2,
     price: "₹22,000",
-    image: "/images/vistara-hero.png",
+    image: "/images/vistara-1.png",
     tag: "Mountain View Villas",
     slug: "vistara-villa",
   },
   {
     name: "Amora Villa",
-    location: "Alibaug",
-    bhk: 5,
-    bath: 5,
-    price: "₹30,000",
-    image: "/images/amora-hero.png",
-    tag: "Water View Villas",
-    slug: "amora-villa",
-  },
-  {
-    name: "Brooklyn",
-    location: "Igatpuri",
-    bhk: 6,
-    bath: 6,
-    price: "₹18,000",
-    image: "/images/villa-brooklyn.png",
-    tag: "Mountain View Villas",
-  },
-  {
-    name: "Vanamora",
-    location: "Nashik",
-    bhk: 5,
-    bath: 7,
-    price: "₹25,000",
-    image: "/images/villa-vanamora.png",
-    tag: "Mountain View Villas",
-  },
-  {
-    name: "7 Palms",
-    location: "Alibaug",
-    bhk: 7,
-    bath: 7,
-    price: "₹35,000",
-    image: "/images/villa-7palms.png",
-    tag: "Mountain View Villas",
-  },
-  {
-    name: "Alpha Villa",
     location: "Igatpuri",
     bhk: 3,
     bath: 2,
-    price: "₹6,000",
-    image: "/images/villa-alpha.png",
-    tag: "Mountain View Villas",
+    price: "₹30,000",
+    image: "/images/amora-1.png",
+    tag: "Water View Villas",
+    slug: "amora-villa",
   },
 ];
 
@@ -99,7 +63,7 @@ export default function Collections() {
             Featured <em>collections</em>
           </h2>
         </div>
-        <a href="#" className="browse-link">
+        <a href="/collections" className="browse-link">
           Browse All Villas →
         </a>
       </div>
@@ -117,42 +81,40 @@ export default function Collections() {
       </div>
 
       <div className="villas-grid">
-        {villas.map((v, i) => {
-          const CardWrapper = v.slug ? "a" : "div";
-          const cardProps = v.slug ? { href: `/villa/${v.slug}` } : {};
-
-          return (
-            <CardWrapper key={i} className="villa-card" {...cardProps} style={{ textDecoration: "none", color: "inherit" }}>
-              <div className="villa-img-wrapper">
-                <img className="villa-img" src={v.image} alt={v.name} />
-                <div className="villa-tag">{v.tag}</div>
-                <div className="villa-watermark">Staycation Villas</div>
-              </div>
-              <div className="villa-details">
-                <div className="villa-location">{v.location}</div>
-                <div className="villa-name">{v.name}</div>
-                <div className="villa-specs">
-                  <div className="villa-spec">
-                    <BedIcon />
-                    {v.bhk} BHK
-                  </div>
-                  <div className="villa-spec">
-                    <BathIcon />
-                    {v.bath} Bath
-                  </div>
+        {villas.map((v, i) => (
+          <a
+            key={i}
+            href={`/villa/${v.slug}`}
+            className="villa-card"
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
+            <div className="villa-img-wrapper">
+              <img className="villa-img" src={v.image} alt={v.name} />
+              <div className="villa-tag">{v.tag}</div>
+              <div className="villa-watermark">Staycation Villas</div>
+            </div>
+            <div className="villa-details">
+              <div className="villa-location">{v.location}</div>
+              <div className="villa-name">{v.name}</div>
+              <div className="villa-specs">
+                <div className="villa-spec">
+                  <BedIcon />
+                  {v.bhk} BHK
                 </div>
-                <div className="villa-footer">
-                  <div className="villa-price">
-                    {v.price} <span>/night</span>
-                  </div>
-                  <span className="villa-view">
-                    View →
-                  </span>
+                <div className="villa-spec">
+                  <BathIcon />
+                  {v.bath} Bath
                 </div>
               </div>
-            </CardWrapper>
-          );
-        })}
+              <div className="villa-footer">
+                <div className="villa-price">
+                  {v.price} <span>/night</span>
+                </div>
+                <span className="villa-view">View →</span>
+              </div>
+            </div>
+          </a>
+        ))}
       </div>
     </section>
   );

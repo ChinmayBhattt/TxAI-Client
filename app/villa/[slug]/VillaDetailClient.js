@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Navbar from "../../components/Navbar";
 import ContactFloat from "../../components/ContactFloat";
+import BookingModal from "../../components/BookingModal";
 
 function StarRating({ rating, size = 16 }) {
   return (
@@ -24,12 +25,33 @@ export default function VillaDetailClient({ villa }) {
   const [showAllPhotos, setShowAllPhotos] = useState(false);
   const [faqOpen, setFaqOpen] = useState(null);
   const [scrolled, setScrolled] = useState(false);
+  const [bookingModalOpen, setBookingModalOpen] = useState(false);
+
+  // Real-time booking state for sidebar
+  const [checkIn, setCheckIn] = useState("2026-08-01");
+  const [checkOut, setCheckOut] = useState("2026-08-03");
+  const [guests, setGuests] = useState(2);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 100);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Real-time Tariff calculations
+  const calculateNights = () => {
+    if (!checkIn || !checkOut) return 1;
+    const start = new Date(checkIn);
+    const end = new Date(checkOut);
+    const diff = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
+    return diff > 0 ? diff : 1;
+  };
+
+  const nights = calculateNights();
+  const baseRate = parseInt(villa.price.replace(/[^0-9]/g, ""), 10) || 22000;
+  const subtotal = baseRate * nights;
+  const gst = Math.round(subtotal * 0.18);
+  const totalAmount = subtotal + gst;
 
   return (
     <>
@@ -43,7 +65,7 @@ export default function VillaDetailClient({ villa }) {
         </span>
       </div>
 
-      {/* Navbar — dark theme for detail page */}
+      {/* Navbar */}
       <nav className={`navbar navbar-detail ${scrolled ? "navbar-scrolled" : ""}`}>
         <div className="navbar-brand">
           <a href="/" className="brand-name">Staycation Villas</a>
@@ -60,7 +82,7 @@ export default function VillaDetailClient({ villa }) {
           <a href="/#luxury" className="has-dropdown">
             Luxury <span className="dropdown-arrow">▾</span>
           </a>
-          <a href="/#" className="has-dropdown">
+          <a href="/about-us" className="has-dropdown">
             About Us <span className="dropdown-arrow">▾</span>
           </a>
           <a href="#">Partner With Us</a>
@@ -332,7 +354,7 @@ export default function VillaDetailClient({ villa }) {
             </div>
           </div>
 
-          {/* Right: Booking Sidebar */}
+          {/* Right: REAL-TIME INTERACTIVE BOOKING SIDEBAR */}
           <aside className="vd-sidebar">
             <div className="vd-booking-card">
               <p className="vd-booking-title">Pick your dates to see your total</p>
@@ -341,7 +363,8 @@ export default function VillaDetailClient({ villa }) {
                 🎁 26% OFF - GETAWAY SALE
               </div>
 
-              <div className="vd-booking-dates">
+              {/* Real-time Dates Picker */}
+              <div className="vd-booking-dates vd-dates-interactive">
                 <div className="vd-booking-field">
                   <div className="vd-booking-field-icon">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" width="18" height="18">
@@ -349,9 +372,14 @@ export default function VillaDetailClient({ villa }) {
                       <path d="M16 2v4M8 2v4M3 10h18" />
                     </svg>
                   </div>
-                  <div>
+                  <div className="vd-input-wrap">
                     <div className="vd-field-label">CHECK IN</div>
-                    <div className="vd-field-value">Add date</div>
+                    <input
+                      type="date"
+                      className="vd-date-input"
+                      value={checkIn}
+                      onChange={(e) => setCheckIn(e.target.value)}
+                    />
                   </div>
                 </div>
                 <div className="vd-booking-divider" />
@@ -362,41 +390,67 @@ export default function VillaDetailClient({ villa }) {
                       <path d="M16 2v4M8 2v4M3 10h18" />
                     </svg>
                   </div>
-                  <div>
+                  <div className="vd-input-wrap">
                     <div className="vd-field-label">CHECK OUT</div>
-                    <div className="vd-field-value">Add date</div>
+                    <input
+                      type="date"
+                      className="vd-date-input"
+                      value={checkOut}
+                      onChange={(e) => setCheckOut(e.target.value)}
+                    />
                   </div>
                 </div>
               </div>
 
-              <div className="vd-booking-guests">
+              {/* Real-time Guest Select */}
+              <div className="vd-booking-guests vd-guests-interactive">
                 <div className="vd-booking-field-icon">
                   <svg viewBox="0 0 24 24" fill="none" stroke="#d4874e" strokeWidth="1.5" width="18" height="18">
                     <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
                     <circle cx="9" cy="7" r="4" />
                   </svg>
                 </div>
-                <div>
+                <div className="vd-input-wrap">
                   <div className="vd-field-label">GUESTS</div>
-                  <div className="vd-field-value">Guest</div>
+                  <select
+                    className="vd-guest-select"
+                    value={guests}
+                    onChange={(e) => setGuests(parseInt(e.target.value, 10))}
+                  >
+                    {Array.from({ length: villa.maxGuests || 10 }).map((_, i) => (
+                      <option key={i + 1} value={i + 1}>
+                        {i + 1} Guest{i > 0 ? "s" : ""}
+                      </option>
+                    ))}
+                  </select>
                 </div>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="16" height="16" className="vd-chevron">
-                  <path d="M6 9l6 6 6-6" />
-                </svg>
               </div>
 
-              <button className="vd-special-offer-btn">
+              <button className="vd-special-offer-btn" onClick={() => setBookingModalOpen(true)}>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18">
                   <path d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
                 SWIPE FOR SPECIAL OFFER
               </button>
 
+              {/* REAL-TIME TARIFF CALCULATOR BOX */}
               <div className="vd-tariff">
-                <div className="vd-tariff-label">TARIFF</div>
-                <p className="vd-tariff-desc">
-                  Select your dates and guests to see the price breakdown.
-                </p>
+                <div className="vd-tariff-label">REAL-TIME TARIFF BREAKDOWN</div>
+                <div className="vd-tariff-calc-rows">
+                  <div className="vd-calc-row">
+                    <span>₹{baseRate.toLocaleString("en-IN")} × {nights} night(s)</span>
+                    <span>₹{subtotal.toLocaleString("en-IN")}</span>
+                  </div>
+                  <div className="vd-calc-row">
+                    <span>GST &amp; Service Fee (18%)</span>
+                    <span>₹{gst.toLocaleString("en-IN")}</span>
+                  </div>
+                  <div className="vd-calc-divider" />
+                  <div className="vd-calc-total">
+                    <span>Total Price</span>
+                    <span className="vd-total-highlight">₹{totalAmount.toLocaleString("en-IN")}</span>
+                  </div>
+                </div>
               </div>
 
               <p className="vd-best-rate">
@@ -404,8 +458,8 @@ export default function VillaDetailClient({ villa }) {
                 be given on phone.
               </p>
 
-              <button className="vd-book-btn">
-                BOOK NOW
+              <button className="vd-book-btn" onClick={() => setBookingModalOpen(true)}>
+                BOOK NOW — ₹{totalAmount.toLocaleString("en-IN")}
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18">
                   <path d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
@@ -445,6 +499,16 @@ export default function VillaDetailClient({ villa }) {
       </main>
 
       <ContactFloat />
+
+      {/* Booking & Razorpay UPI Payment Modal */}
+      <BookingModal
+        isOpen={bookingModalOpen}
+        onClose={() => setBookingModalOpen(false)}
+        villa={villa}
+        initialCheckIn={checkIn}
+        initialCheckOut={checkOut}
+        initialGuests={guests}
+      />
     </>
   );
 }
