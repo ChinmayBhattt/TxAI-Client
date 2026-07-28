@@ -178,6 +178,21 @@ export default function VillaDetailClient({ villa }) {
               ))}
             </div>
 
+            {/* Amenities Section */}
+            {villa.amenities && (
+              <div className="vd-amenities-section">
+                <h2 className="vd-section-heading">Amenities</h2>
+                <div className="vd-amenities-grid">
+                  {villa.amenities.map((item, i) => (
+                    <div key={i} className="vd-amenity-item">
+                      <span className="vd-amenity-icon">{item.icon}</span>
+                      <span className="vd-amenity-name">{item.name}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
             {/* FAQ */}
             <div className="vd-faq-section">
               <h2 className="vd-section-heading">FAQ</h2>
