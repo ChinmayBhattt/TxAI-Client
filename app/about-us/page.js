@@ -4,9 +4,9 @@ import Footer from "../components/Footer";
 import ContactFloat from "../components/ContactFloat";
 
 export const metadata = {
-  title: "Our Story | EkoStay",
+  title: "Our Story |  ",
   description:
-    "From a single home to 170+ handpicked villas across India — here's how EkoStay came to be.",
+    "From a single home to 170+ handpicked villas across India — here's how   came to be.",
 };
 
 export default function AboutUsPage() {
@@ -26,7 +26,7 @@ export default function AboutUsPage() {
           </h1>
           <p className="about-hero-desc">
             From a single home to 170+ handpicked villas across India — here&apos;s
-            how EkoStay came to be.
+            how   came to be.
           </p>
           <div className="about-scroll-indicator">
             <span>SCROLL TO DISCOVER</span>
@@ -41,20 +41,20 @@ export default function AboutUsPage() {
           <div className="about-welcome-img-wrapper">
             <img
               src="/images/hero-bg.png"
-              alt="Luxury EkoStay villa view"
+              alt="Luxury   villa view"
               className="about-welcome-img"
             />
             <div className="about-welcome-badge">✦ EST. 2018</div>
           </div>
           <div className="about-welcome-text">
-            <div className="section-subtitle">— WELCOME TO EKOSTAY</div>
+            <div className="section-subtitle">— WELCOME TO  </div>
             <h2 className="about-heading">
               Homes with character,
               <br />
               stays without compromise.
             </h2>
             <p className="about-para">
-              Today, EkoStay is one of India&apos;s leading names in the Short-term
+              Today,   is one of India&apos;s leading names in the Short-term
               Rental and Homestay Industry — with 160+ handpicked villas across
               20 destinations in Maharashtra, Goa, Tamil Nadu, and Uttarakhand.
               From premium villas in Ooty, charming villas in Coonoor, and
@@ -86,7 +86,7 @@ export default function AboutUsPage() {
             Founded in 2018 by the Entrepreneurial Fantastic Four — Husain Khatumdi,
             Sohail Mirchandani, Varun Arora &amp; Zishan Khan — with a vision to
             tailor the needs of holiday-goers experiencing a cozy &amp; private stay,
-            a home away from home. EkoStay now welcomes guests across 170+ villas
+            a home away from home.   now welcomes guests across 170+ villas
             in 15+ destinations.
           </p>
 
@@ -97,7 +97,7 @@ export default function AboutUsPage() {
                 <span className="timeline-year">2018</span>
                 <h3 className="timeline-title">Where it began</h3>
                 <p>
-                  EkoStay began in 2018 with just ten homes in a single destination,
+                  began in 2018 with just ten homes in a single destination,
                   founded by four entrepreneurs — Husain Khatumdi, Sohail Mirchandani,
                   Varun Arora and Zishan Khan. The idea was simple: give holiday-goers a cozy,
                   private home away from home, and give homeowners a partner they could trust.
@@ -133,7 +133,7 @@ export default function AboutUsPage() {
                 <span className="timeline-year">2025+</span>
                 <h3 className="timeline-title"> Managed Villas &amp; Beyond</h3>
                 <p>
-                  Today, EkoStay stands as a nation-wide brand with over 800,000+
+                  Today,   stands as a nation-wide brand with over 800,000+
                   happy guests hosted. With standard services, end-to-end management,
                   and direct booking guarantees, we continue to shape luxury homestays
                   in India.

@@ -109,56 +109,17 @@ export default function Navbar() {
         className={`navbar ${scrolled ? "navbar-scrolled" : ""}`}
       >
         <div className="navbar-brand">
-          <a href="/" className="brand-name">
-            Staycation Villas
+          <a href="/" className="brand-link">
+            <img src="/images/logo.png" alt="Staycation Villas Logo" className="brand-logo" />
+            <span className="brand-name">Staycation Villas</span>
           </a>
           <div className="brand-divider" />
-          <span className="brand-tagline">Click. Book. Holiday.</span>
+          <span className="brand-tagline"> </span>
         </div>
 
         <div className={`navbar-links ${mobileOpen ? "mobile-open" : ""}`}>
-          {/* Destinations */}
-          <div className="nav-dropdown-wrapper">
-            <button
-              className="has-dropdown nav-link-btn"
-              onClick={() => toggleDropdown("destinations")}
-            >
-              Destinations <span className="dropdown-arrow">▾</span>
-            </button>
-            <Dropdown isOpen={openDropdown === "destinations"}>
-              <div className="dropdown-col dropdown-featured-only">
-                <div className="dropdown-col-title">Featured Villas</div>
-                {featuredVillas.map((v, i) => (
-                  <a key={i} href={v.href} className="dropdown-villa-card">
-                    <img src={v.image} alt={v.name} className="dropdown-villa-img" />
-                    <div>
-                      <div className="dropdown-villa-name">{v.name}</div>
-                      <div className="dropdown-villa-loc">{v.location}</div>
-                    </div>
-                  </a>
-                ))}
-              </div>
-            </Dropdown>
-          </div>
-
-          {/* Collections */}
-          <div className="nav-dropdown-wrapper">
-            <button
-              className="has-dropdown nav-link-btn"
-              onClick={() => toggleDropdown("collections")}
-            >
-              Collections <span className="dropdown-arrow">▾</span>
-            </button>
-            <Dropdown isOpen={openDropdown === "collections"}>
-              <div className="dropdown-list">
-                {collectionsLinks.map((c, i) => (
-                  <a key={i} href={c.href} className="dropdown-list-item">
-                    {c.name}
-                  </a>
-                ))}
-              </div>
-            </Dropdown>
-          </div>
+          <a href="/villa/vistara-villa">Vistara Villa</a>
+          <a href="/villa/amora-villa">Amora Villa</a>
 
           {/* Luxury */}
           <div className="nav-dropdown-wrapper">

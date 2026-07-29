@@ -1,8 +1,39 @@
+"use client";
+
+import { useState, useEffect } from "react";
+
+const slides = [
+  {
+    image: "/images/hero-bg-1.png",
+    alt: "Staycation Villa 1",
+  },
+  {
+    image: "/images/hero-bg-2.png",
+    alt: "Staycation Villa 2",
+  },
+];
+
 export default function Hero() {
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <section className="hero" id="hero">
       <div className="hero-bg">
-        <img src="/images/hero-bg.png" alt="Beautiful tea plantation villa at sunset" />
+        {slides.map((slide, index) => (
+          <img
+            key={index}
+            src={slide.image}
+            alt={slide.alt}
+            className={`hero-bg-slide ${index === currentSlide ? "active" : ""}`}
+          />
+        ))}
         <div className="hero-overlay" />
       </div>
 
@@ -69,12 +100,14 @@ export default function Hero() {
 
       {/* Slider dots */}
       <div className="hero-dots">
-        <div className="hero-dot active" />
-        <div className="hero-dot" />
-        <div className="hero-dot" />
-        <div className="hero-dot" />
-        <div className="hero-dot" />
-        <div className="hero-dot" />
+        {slides.map((_, index) => (
+          <button
+            key={index}
+            className={`hero-dot ${index === currentSlide ? "active" : ""}`}
+            onClick={() => setCurrentSlide(index)}
+            aria-label={`Go to slide ${index + 1}`}
+          />
+        ))}
       </div>
     </section>
   );

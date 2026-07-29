@@ -66,30 +66,7 @@ export default function VillaDetailClient({ villa }) {
       </div>
 
       {/* Navbar */}
-      <nav className={`navbar navbar-detail ${scrolled ? "navbar-scrolled" : ""}`}>
-        <div className="navbar-brand">
-          <a href="/" className="brand-name">Staycation Villas</a>
-          <div className="brand-divider" />
-          <span className="brand-tagline">Click. Book. Holiday.</span>
-        </div>
-        <div className="navbar-links">
-          <a href="/#destinations" className="has-dropdown">
-            Destinations <span className="dropdown-arrow">▾</span>
-          </a>
-          <a href="/#collections" className="has-dropdown">
-            Collections <span className="dropdown-arrow">▾</span>
-          </a>
-          <a href="/#luxury" className="has-dropdown">
-            Luxury <span className="dropdown-arrow">▾</span>
-          </a>
-          <a href="/about-us" className="has-dropdown">
-            About Us <span className="dropdown-arrow">▾</span>
-          </a>
-          <a href="#">Partner With Us</a>
-          <a href="#">Membership</a>
-          <a href="#" className="btn-login">Login</a>
-        </div>
-      </nav>
+      <Navbar />
 
       <main className="vd-page">
         {/* Title + Rating */}

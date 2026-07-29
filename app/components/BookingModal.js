@@ -183,7 +183,7 @@ export default function BookingModal({
       rzp.on("payment.failed", function (response) {
         setError(
           response.error?.description ||
-            "Payment failed. Please try again."
+          "Payment failed. Please try again."
         );
         setLoading(false);
       });
@@ -226,7 +226,7 @@ Payment Ref:      ${paymentId}
 Gateway:          Razorpay
 ==================================================
 Thank you for choosing Staycation Villas!
-Support: +91 8169019090 | reservations@ekostay.com
+Support:  ‪+91 80820 88000‬ | reservations@ .com
 ==================================================
     `.trim();
 

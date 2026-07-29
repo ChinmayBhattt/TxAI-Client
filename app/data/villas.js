@@ -79,7 +79,7 @@ export const villaData = {
         a: "Yes, a dedicated caretaker is available 24/7 to assist with your needs.",
       },
     ],
-    hostPhone: "+918065201362",
+    hostPhone: " ‪+91 80820 88000‬",
     mapUrl:
       "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d60065.25!2d73.5!3d19.7!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bdd93f0!2sIgatpuri!5e0!3m2!1sen!2sin",
   },
@@ -160,7 +160,7 @@ export const villaData = {
         a: "Yes, covered and street parking are available.",
       },
     ],
-    hostPhone: "+918065201362",
+    hostPhone: " ‪+91 80820 88000‬",
     mapUrl:
       "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d60065.25!2d73.5!3d19.7!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bdd93f0!2sIgatpuri!5e0!3m2!1sen!2sin",
   },

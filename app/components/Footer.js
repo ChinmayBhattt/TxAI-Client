@@ -4,8 +4,11 @@ export default function Footer() {
       <div className="footer-inner">
         {/* Brand column */}
         <div className="footer-brand">
-          <div className="footer-logo">Staycation Villas</div>
-          <p className="footer-tagline">Click. Book. Holiday.</p>
+          <div className="footer-logo">
+            <img src="/images/logo.png" alt="Staycation Villas Logo" className="footer-logo-img" />
+            <span>Staycation Villas</span>
+          </div>
+          <p className="footer-tagline"> </p>
           <p className="footer-desc">
             India&apos;s most trusted villa holiday brand. Handpicked stays
             across 18+ destinations, managed end-to-end for your perfect
@@ -76,7 +79,7 @@ export default function Footer() {
           <h4 className="footer-heading" style={{ marginTop: "24px" }}>Contact</h4>
           <ul className="footer-list">
             <li>
-              <a href="tel:+918169019090">+91 8169019090</a>
+              <a href="tel:+918169019090"> ‪+91 80820 88000‬</a>
             </li>
             <li>
               <a href="mailto:reservations@ekostay.com">reservations@ekostay.com</a>

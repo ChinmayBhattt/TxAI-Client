@@ -4,9 +4,9 @@ import Footer from "../components/Footer";
 import ContactFloat from "../components/ContactFloat";
 
 export const metadata = {
-  title: "Our Team | EkoStay Leadership",
+  title: "Our Team |   Leadership",
   description:
-    "Meet the people powering EkoStay — the co-founders and team behind India's premier villa holiday brand.",
+    "Meet the people powering   — the co-founders and team behind India's premier villa holiday brand.",
 };
 
 const founders = [
@@ -14,7 +14,7 @@ const founders = [
     name: "Husain Khatumdi",
     role: "Co-Founder",
     image: "/images/founder1.png",
-    bio: "Pioneering operational excellence and guest experience across all EkoStay properties.",
+    bio: "Pioneering operational excellence and guest experience across all   properties.",
   },
   {
     name: "Sohail Mirchandani",
@@ -47,7 +47,7 @@ export default function TeamPage() {
         <div className="team-hero-inner">
           <div className="team-subtitle">— OUR TEAM —</div>
           <h1 className="team-hero-title">
-            Meet the people <em>powering EkoStay</em>
+            Meet the people <em>powering  </em>
           </h1>
           <p className="team-hero-desc">
             We take pride in professionally managing properties as effortless
@@ -64,7 +64,7 @@ export default function TeamPage() {
             — LEADERSHIP —
           </div>
           <h2 className="section-title" style={{ textAlign: "center", marginBottom: "50px" }}>
-            The <em>founders</em> behind EkoStay
+            The <em>founders</em> behind
           </h2>
 
           <div className="founders-grid">

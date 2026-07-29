@@ -4,9 +4,9 @@ import Footer from "../components/Footer";
 import ContactFloat from "../components/ContactFloat";
 
 export const metadata = {
-  title: "Contact Us | EkoStay",
+  title: "Contact Us |  ",
   description:
-    "Get in touch with EkoStay villa specialists. Call +91 8169019090 or email reservations@ekostay.com.",
+    "Get in touch with   villa specialists. Call  ‪+91 80820 88000‬ or email reservations@ .com.",
 };
 
 export default function ContactPage() {
@@ -18,7 +18,7 @@ export default function ContactPage() {
       {/* Hero Section */}
       <section className="contact-hero">
         <div className="contact-hero-inner">
-          <div className="contact-subtitle">— CONTACT EKOSTAY —</div>
+          <div className="contact-subtitle">— CONTACT   —</div>
           <h1 className="contact-hero-title">
             Let&apos;s plan your <em>next escape,</em>
             <br />
@@ -74,7 +74,7 @@ export default function ContactPage() {
               <div className="contact-card-icon-circle">📞</div>
               <div className="contact-card-label">CALL US</div>
               <a href="tel:+918169019090" className="contact-card-value">
-                +91 8169019090
+                ‪+91 80820 88000‬
               </a>
               <p className="contact-card-sub">
                 Speak to a villa specialist, 7 days a week.
@@ -94,7 +94,7 @@ export default function ContactPage() {
                 rel="noreferrer"
                 className="contact-card-value"
               >
-                +91 8169019090
+                ‪+91 80820 88000‬
               </a>
               <p className="contact-card-sub">
                 Quick questions? Chat with us instantly.
@@ -114,16 +114,16 @@ export default function ContactPage() {
               <div className="contact-card-icon-circle">✉️</div>
               <div className="contact-card-label">EMAIL US</div>
               <a
-                href="mailto:reservations@ekostay.com"
+                href="mailto:reservations@ .com"
                 className="contact-card-value"
               >
-                reservations@ekostay.com
+                reservations@ .com
               </a>
               <p className="contact-card-sub">
                 For bookings, invoices &amp; detailed enquiries.
               </p>
               <a
-                href="mailto:reservations@ekostay.com"
+                href="mailto:reservations@ .com"
                 className="contact-action-btn"
               >
                 WRITE TO US →

@@ -133,7 +133,7 @@ export default function CollectionsClient() {
         </div>
 
         <div className="col-hero-content">
-          <div className="col-hero-tag">— FEATURED COLLECTION · EKOSTAY —</div>
+          <div className="col-hero-tag">— FEATURED COLLECTION ·   —</div>
           <h1 className="col-hero-title">Alpha Villa</h1>
           <div className="col-hero-location">📍 IGATPURI</div>
 
@@ -166,7 +166,7 @@ export default function CollectionsClient() {
 
           <div className="col-narrative-body">
             <p>
-              <strong>Mountain View Villas by EKOSTAY</strong> are your
+              <strong>Mountain View Villas by  </strong> are your
               front-row seat to nature&apos;s finest views — where every window
               frames a postcard-perfect valley. Whether you&apos;re sipping your
               morning coffee in the hills of <strong>Lonavala</strong>, soaking in
@@ -263,9 +263,8 @@ export default function CollectionsClient() {
             {locationFilters.map((loc, i) => (
               <button
                 key={i}
-                className={`col-filter-chip ${
-                  selectedLocation === loc ? "active" : ""
-                }`}
+                className={`col-filter-chip ${selectedLocation === loc ? "active" : ""
+                  }`}
                 onClick={() => setSelectedLocation(loc)}
               >
                 {loc}
@@ -280,7 +279,7 @@ export default function CollectionsClient() {
                 <div className="col-card-media">
                   <img src={v.image} alt={v.name} className="col-card-img" />
                   <div className="col-card-badge">{v.badge}</div>
-                  <div className="col-watermark">EKOSTAY</div>
+                  <div className="col-watermark"> </div>
                   <div className="col-img-counter">1/20</div>
                 </div>
 

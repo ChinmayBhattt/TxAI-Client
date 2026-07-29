@@ -19,7 +19,7 @@ export async function generateMetadata({ params }) {
     .join(" ");
 
   return {
-    title: `${title} | EkoStay Collection`,
+    title: `${title} |   Collection`,
     description: `Explore handpicked ${title} across top destinations in India.`,
   };
 }
