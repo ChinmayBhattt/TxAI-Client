@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 const slides = [
   {
@@ -14,7 +15,14 @@ const slides = [
 ];
 
 export default function Hero() {
+  const router = useRouter();
   const [currentSlide, setCurrentSlide] = useState(0);
+
+  // Search states
+  const [selectedVilla, setSelectedVilla] = useState("amora-villa");
+  const [checkIn, setCheckIn] = useState("2026-08-01");
+  const [checkOut, setCheckOut] = useState("2026-08-03");
+  const [guests, setGuests] = useState(2);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -22,6 +30,12 @@ export default function Hero() {
     }, 5000);
     return () => clearInterval(timer);
   }, []);
+
+  const handleSearch = () => {
+    router.push(
+      `/villa/${selectedVilla}?checkIn=${checkIn}&checkOut=${checkOut}&guests=${guests}`
+    );
+  };
 
   return (
     <section className="hero" id="hero">
@@ -59,18 +73,55 @@ export default function Hero() {
         {/* Search bar */}
         <div className="search-bar">
           <div className="search-field">
-            <div className="search-field-label">Destination</div>
-            <div className="search-field-value">Ooty</div>
+            <label className="search-field-label" htmlFor="hero-villa-select">Vila</label>
+            <select
+              id="hero-villa-select"
+              className="search-select"
+              value={selectedVilla}
+              onChange={(e) => setSelectedVilla(e.target.value)}
+            >
+              <option value="amora-villa">Amora Villa</option>
+              <option value="vistara-villa">Vistara Villa</option>
+            </select>
           </div>
+
           <div className="search-field">
-            <div className="search-field-label">Check In — Out</div>
-            <div className="search-field-value">Add dates</div>
+            <label className="search-field-label" htmlFor="hero-checkin">Check In — Out</label>
+            <div style={{ display: "flex", gap: "4px", alignItems: "center" }}>
+              <input
+                id="hero-checkin"
+                type="date"
+                className="search-date-input"
+                value={checkIn}
+                onChange={(e) => setCheckIn(e.target.value)}
+              />
+              <span style={{ color: "rgba(255,255,255,0.5)", fontSize: "12px" }}>–</span>
+              <input
+                type="date"
+                className="search-date-input"
+                value={checkOut}
+                onChange={(e) => setCheckOut(e.target.value)}
+              />
+            </div>
           </div>
+
           <div className="search-field">
-            <div className="search-field-label">Guests</div>
-            <div className="search-field-value">Add guests</div>
+            <label className="search-field-label" htmlFor="hero-guests">Guests</label>
+            <select
+              id="hero-guests"
+              className="search-select"
+              value={guests}
+              onChange={(e) => setGuests(parseInt(e.target.value, 10))}
+            >
+              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((num) => (
+                <option key={num} value={num}>
+                  {num} {num === 1 ? "Guest" : "Guests"}
+                </option>
+              ))}
+            </select>
           </div>
-          <button className="search-btn">
+
+          <button className="search-btn" onClick={handleSearch}>
             Search
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M7 17L17 7M17 7H7M17 7V17" />
@@ -79,7 +130,7 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Promo card */}
+      {/* Promo card
       <div className="hero-promo">
         <div className="promo-badge">
           <span className="dot" />
@@ -96,7 +147,7 @@ export default function Hero() {
             📋
           </button>
         </div>
-      </div>
+      </div> */}
 
       {/* Slider dots */}
       <div className="hero-dots">

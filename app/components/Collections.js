@@ -4,7 +4,6 @@ import { useState } from "react";
 
 const tabs = [
   "Mountain View Villas",
-  "Water View Villas",
   "Hidden Gems",
   "Senior Citizen Friendly",
   "Corporate Offsite Villas",
@@ -19,7 +18,7 @@ const villas = [
     location: "Igatpuri",
     bhk: 3,
     bath: 2,
-    price: "₹22,000",
+    price: "₹12,000",
     image: "/images/vistara-1.png",
     tag: "Mountain View Villas",
     slug: "vistara-villa",
@@ -29,7 +28,7 @@ const villas = [
     location: "Igatpuri",
     bhk: 3,
     bath: 2,
-    price: "₹30,000",
+    price: "₹12,000",
     image: "/images/amora-1.png",
     tag: "Water View Villas",
     slug: "amora-villa",

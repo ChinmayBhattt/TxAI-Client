@@ -10,7 +10,7 @@ export const villaData = {
     bath: 2,
     rating: 4.7,
     reviews: 69,
-    price: "₹22,000",
+    price: "₹12,000",
     pricePerNight: "22,000",
     tags: [
       { icon: "💰", label: "Pocket Friendly Villas", desc: "Affordable comfort for every budget" },
@@ -96,7 +96,7 @@ export const villaData = {
     bath: 2,
     rating: 4.7,
     reviews: 81,
-    price: "₹30,000",
+    price: "₹12,000",
     pricePerNight: "30,000",
     tags: [
       { icon: "👫", label: "Couples Friendly", desc: "Designed for couples travelling in groups" },

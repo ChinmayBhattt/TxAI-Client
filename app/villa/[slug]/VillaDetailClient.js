@@ -45,6 +45,18 @@ export default function VillaDetailClient({ villa }) {
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 100);
     window.addEventListener("scroll", handleScroll);
+
+    // Read URL search params from search bar redirect
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const paramCheckIn = params.get("checkIn");
+      const paramCheckOut = params.get("checkOut");
+      const paramGuests = params.get("guests");
+      if (paramCheckIn) setCheckIn(paramCheckIn);
+      if (paramCheckOut) setCheckOut(paramCheckOut);
+      if (paramGuests) setGuests(parseInt(paramGuests, 10));
+    }
+
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
