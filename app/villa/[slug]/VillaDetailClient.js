@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import TopBanner from "../../components/TopBanner";
 import Navbar from "../../components/Navbar";
 import ContactFloat from "../../components/ContactFloat";
 import BookingModal from "../../components/BookingModal";
@@ -26,6 +27,15 @@ export default function VillaDetailClient({ villa }) {
   const [faqOpen, setFaqOpen] = useState(null);
   const [scrolled, setScrolled] = useState(false);
   const [bookingModalOpen, setBookingModalOpen] = useState(false);
+
+  // Tags horizontal scroll ref
+  const tagsRef = useRef(null);
+
+  const scrollTags = (direction) => {
+    if (tagsRef.current) {
+      tagsRef.current.scrollBy({ left: direction, behavior: "smooth" });
+    }
+  };
 
   // Real-time booking state for sidebar
   const [checkIn, setCheckIn] = useState("2026-08-01");
@@ -56,14 +66,7 @@ export default function VillaDetailClient({ villa }) {
   return (
     <>
       {/* Top Banner */}
-      <div className="top-banner">
-        <span className="gift-icon">🎁</span>
-        <span className="sale-title">The Great Getaway Sale</span>
-        <span className="sale-text">
-          {" "}— Flat 26% Off On All Properties · Code:{" "}
-          <span className="sale-code">GETAWAY26</span>
-        </span>
-      </div>
+      <TopBanner />
 
       {/* Navbar */}
       <Navbar />
@@ -155,17 +158,33 @@ export default function VillaDetailClient({ villa }) {
               </div>
             </div>
 
-            {/* Tags / Amenities */}
-            <div className="vd-tags">
-              {villa.tags.map((tag, i) => (
-                <div key={i} className="vd-tag">
-                  <span className="vd-tag-icon">{tag.icon}</span>
-                  <div>
-                    <div className="vd-tag-label">{tag.label}</div>
-                    <div className="vd-tag-desc">{tag.desc}</div>
+            {/* Tags / Amenities Horizontal Scroll Slider */}
+            <div className="vd-tags-wrapper">
+              <button
+                className="vd-tags-scroll-btn left"
+                onClick={() => scrollTags(-280)}
+                aria-label="Scroll left"
+              >
+                ‹
+              </button>
+              <div className="vd-tags" ref={tagsRef}>
+                {villa.tags.map((tag, i) => (
+                  <div key={i} className="vd-tag">
+                    <span className="vd-tag-icon">{tag.icon}</span>
+                    <div className="vd-tag-content">
+                      <div className="vd-tag-label">{tag.label}</div>
+                      <div className="vd-tag-desc">{tag.desc}</div>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
+              <button
+                className="vd-tags-scroll-btn right"
+                onClick={() => scrollTags(280)}
+                aria-label="Scroll right"
+              >
+                ›
+              </button>
             </div>
 
             {/* Description */}

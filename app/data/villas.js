@@ -17,6 +17,8 @@ export const villaData = {
       { icon: "👫", label: "Couples Friendly", desc: "Designed for couples travelling in groups" },
       { icon: "👴", label: "Senior Citizen Friendly", desc: "Comfortable stays with easy access" },
       { icon: "👩", label: "Woman Friendly", desc: "Designed for Women — Safe, Stylish, and Secure" },
+      { icon: "🏞️", label: "Mountain View", desc: "Scenic hill views & cool breeze" },
+      { icon: "🏊‍♂️", label: "Private Pool Villa", desc: "Clean private pool & lounging" },
     ],
     images: [
       "/images/vistara-1.png",
@@ -100,6 +102,9 @@ export const villaData = {
       { icon: "👫", label: "Couples Friendly", desc: "Designed for couples travelling in groups" },
       { icon: "👴", label: "Senior Citizen Friendly", desc: "Comfortable stays with easy access" },
       { icon: "👩", label: "Woman Friendly", desc: "Designed for Women — Safe, Stylish, and Secure" },
+      { icon: "💰", label: "Pocket Friendly Villas", desc: "Affordable luxury & great value" },
+      { icon: "🌿", label: "Peaceful Environment", desc: "Quiet surroundings for relaxation" },
+      { icon: "🏊‍♂️", label: "Private Pool", desc: "Exclusive pool for family & friends" },
     ],
     images: [
       "/images/amora-1.png",
