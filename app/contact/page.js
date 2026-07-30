@@ -73,13 +73,13 @@ export default function ContactPage() {
             <div className="contact-card">
               <div className="contact-card-icon-circle">📞</div>
               <div className="contact-card-label">CALL US</div>
-              <a href="tel:+918169019090" className="contact-card-value">
-                ‪+91 80820 88000‬
+              <a href="tel:+918082088000" className="contact-card-value">
+                +91 80820 88000
               </a>
               <p className="contact-card-sub">
                 Speak to a villa specialist, 7 days a week.
               </p>
-              <a href="tel:+918169019090" className="contact-action-btn">
+              <a href="tel:+918082088000" className="contact-action-btn">
                 CALL NOW →
               </a>
             </div>
@@ -89,18 +89,18 @@ export default function ContactPage() {
               <div className="contact-card-icon-circle">💬</div>
               <div className="contact-card-label">WHATSAPP</div>
               <a
-                href="https://wa.me/918169019090"
+                href="https://wa.me/918082088000"
                 target="_blank"
                 rel="noreferrer"
                 className="contact-card-value"
               >
-                ‪+91 80820 88000‬
+                +91 80820 88000
               </a>
               <p className="contact-card-sub">
                 Quick questions? Chat with us instantly.
               </p>
               <a
-                href="https://wa.me/918169019090"
+                href="https://wa.me/918082088000"
                 target="_blank"
                 rel="noreferrer"
                 className="contact-action-btn"
@@ -109,24 +109,28 @@ export default function ContactPage() {
               </a>
             </div>
 
-            {/* Email */}
+            {/* Website */}
             <div className="contact-card">
-              <div className="contact-card-icon-circle">✉️</div>
-              <div className="contact-card-label">EMAIL US</div>
+              <div className="contact-card-icon-circle">🌐</div>
+              <div className="contact-card-label">VISIT WEBSITE</div>
               <a
-                href="mailto:reservations@ .com"
+                href="https://www.chhuttimanao.com"
+                target="_blank"
+                rel="noreferrer"
                 className="contact-card-value"
               >
-                reservations@ .com
+                www.chhuttimanao.com
               </a>
               <p className="contact-card-sub">
-                For bookings, invoices &amp; detailed enquiries.
+                Explore our full vacation &amp; resort portfolio.
               </p>
               <a
-                href="mailto:reservations@ .com"
+                href="https://www.chhuttimanao.com"
+                target="_blank"
+                rel="noreferrer"
                 className="contact-action-btn"
               >
-                WRITE TO US →
+                VISIT SITE →
               </a>
             </div>
           </div>

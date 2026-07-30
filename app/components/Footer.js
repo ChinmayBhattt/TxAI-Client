@@ -15,27 +15,28 @@ export default function Footer() {
             getaway.
           </p>
           <div className="footer-socials">
-            <a href="#" aria-label="Instagram" className="social-link">
+            <a
+              href="https://www.instagram.com/staycationvillas?utm_source=qr&igsh=MWg3ODlscHdwcmwyYg=="
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+              className="social-link"
+            >
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                 <rect x="2" y="2" width="20" height="20" rx="5" />
                 <circle cx="12" cy="12" r="5" />
                 <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none" />
               </svg>
             </a>
-            <a href="#" aria-label="Facebook" className="social-link">
+            <a
+              href="https://www.facebook.com/share/1Fybc2CeSa/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Facebook"
+              className="social-link"
+            >
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                 <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z" />
-              </svg>
-            </a>
-            <a href="#" aria-label="Twitter" className="social-link">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                <path d="M4 4l11.733 16h4.267l-11.733-16zM4 20l6.768-6.768M13.232 10.232L20 4" />
-              </svg>
-            </a>
-            <a href="#" aria-label="YouTube" className="social-link">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                <path d="M22.54 6.42a2.78 2.78 0 00-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 00-1.94 2A29 29 0 001 12a29 29 0 00.46 5.58 2.78 2.78 0 001.94 2C5.12 20 12 20 12 20s6.88 0 8.6-.46a2.78 2.78 0 001.94-2A29 29 0 0023 12a29 29 0 00-.46-5.58z" />
-                <polygon points="9.75,15.02 15.5,12 9.75,8.98" fill="currentColor" stroke="none" />
               </svg>
             </a>
           </div>
@@ -59,11 +60,8 @@ export default function Footer() {
         <div className="footer-links-col">
           <h4 className="footer-heading">Quick Links</h4>
           <ul className="footer-list">
-            <li><a href="/about-us">About Us (Our Story)</a></li>
-            <li><a href="/ourteam">Our Team</a></li>
-            <li><a href="/collections">Eko Gold</a></li>
-            <li><a href="/collections">Eko Luxe</a></li>
-            <li><a href="/ourteam">Careers</a></li>
+            <li><a href="/about-us">About Us</a></li>
+            <li><a href="https://www.chhuttimanao.com" target="_blank" rel="noopener noreferrer">Membership</a></li>
             <li><a href="/contact">Contact Us</a></li>
           </ul>
         </div>
@@ -79,10 +77,10 @@ export default function Footer() {
           <h4 className="footer-heading" style={{ marginTop: "24px" }}>Contact</h4>
           <ul className="footer-list">
             <li>
-              <a href="tel:+918169019090"> ‪+91 80820 88000‬</a>
+              <a href="tel:+918082088000">📞 +91 80820 88000</a>
             </li>
             <li>
-              <a href="mailto:reservations@ekostay.com">reservations@ekostay.com</a>
+              <a href="https://www.chhuttimanao.com" target="_blank" rel="noopener noreferrer">🌐 www.chhuttimanao.com</a>
             </li>
           </ul>
         </div>

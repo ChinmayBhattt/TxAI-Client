@@ -13,22 +13,12 @@ const collectionsLinks = [
   { name: "Kids Friendly", href: "/collections/kids-friendly" },
 ];
 
-const luxuryLinks = [
-  { name: "Eko Gold — Signature", href: "/collections" },
-  { name: "Eko Luxe — Ultra Luxury", href: "/collections" },
-];
 
 const featuredVillas = [
   { name: "Vistara Villa", location: "Igatpuri", image: "/images/vistara-hero.png", href: "/villa/vistara-villa" },
   { name: "Amora Villa", location: "Alibaug", image: "/images/amora-hero.png", href: "/villa/amora-villa" },
 ];
 
-const aboutLinks = [
-  { name: "Our Story", href: "/about-us" },
-  { name: "Our Team", href: "/ourteam" },
-  { name: "Careers", href: "/ourteam" },
-  { name: "Contact Us", href: "/contact" },
-];
 
 function Dropdown({ children, isOpen }) {
   return (
@@ -111,56 +101,17 @@ export default function Navbar() {
         <div className="navbar-brand">
           <a href="/" className="brand-link">
             <img src="/images/logo.png" alt="Staycation Villas Logo" className="brand-logo" />
-            <span className="brand-name">Staycation Villas</span>
+            <span className="brand-name">Stay.Relax.Refresh</span>
           </a>
-          <div className="brand-divider" />
-          <span className="brand-tagline"> </span>
         </div>
 
         <div className={`navbar-links ${mobileOpen ? "mobile-open" : ""}`}>
           <a href="/villa/vistara-villa">Vistara Villa</a>
           <a href="/villa/amora-villa">Amora Villa</a>
 
-          {/* Luxury */}
-          <div className="nav-dropdown-wrapper">
-            <button
-              className="has-dropdown nav-link-btn"
-              onClick={() => toggleDropdown("luxury")}
-            >
-              Luxury <span className="dropdown-arrow">▾</span>
-            </button>
-            <Dropdown isOpen={openDropdown === "luxury"}>
-              <div className="dropdown-list">
-                {luxuryLinks.map((l, i) => (
-                  <a key={i} href={l.href} className="dropdown-list-item">
-                    {l.name}
-                  </a>
-                ))}
-              </div>
-            </Dropdown>
-          </div>
+          <a href="/about-us">About Us</a>
 
-          {/* About Us */}
-          <div className="nav-dropdown-wrapper">
-            <button
-              className="has-dropdown nav-link-btn"
-              onClick={() => toggleDropdown("about")}
-            >
-              About Us <span className="dropdown-arrow">▾</span>
-            </button>
-            <Dropdown isOpen={openDropdown === "about"}>
-              <div className="dropdown-list">
-                {aboutLinks.map((a, i) => (
-                  <a key={i} href={a.href} className="dropdown-list-item">
-                    {a.name}
-                  </a>
-                ))}
-              </div>
-            </Dropdown>
-          </div>
-
-          <a href="#">Partner With Us</a>
-          <a href="#">Membership</a>
+          <a href="https://www.chhuttimanao.com">Membership</a>
 
           {user ? (
             <div className="nav-dropdown-wrapper">
