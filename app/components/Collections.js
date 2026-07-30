@@ -62,9 +62,9 @@ export default function Collections() {
             Featured <em>collections</em>
           </h2>
         </div>
-        <a href="/collections" className="browse-link">
+        {/* <a href="/collections" className="browse-link">
           Browse All Villas →
-        </a>
+        </a> */}
       </div>
 
       <div className="collection-tabs">

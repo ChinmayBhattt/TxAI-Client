@@ -2,7 +2,7 @@ import "./globals.css";
 import Script from "next/script";
 
 export const metadata = {
-  title: "Staycation Villas - Stay Relax",
+  title: "Staycation Villas - Stay Relax Refresh",
   description:
     "Handpicked staycations across India. Book luxury villas, holiday homes, and premium stays in Goa, Alibaug, Lonavala, Igatpuri, Karjat, and more.",
   keywords:

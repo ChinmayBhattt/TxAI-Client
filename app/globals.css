@@ -143,18 +143,21 @@ img {
 }
 
 .brand-logo {
-  height: 54px;
+  height: 50px;
+  max-height: 50px;
   width: auto;
   object-fit: contain;
+  transition: transform 0.2s ease;
 }
 
 .brand-name {
   font-family: var(--font-heading);
-  font-size: 28px;
-  font-weight: 400;
+  font-size: 24px;
+  font-weight: 500;
   color: var(--color-dark);
-  letter-spacing: 4px;
-  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-transform: none;
+  font-style: italic;
 }
 
 .brand-divider {
@@ -1380,6 +1383,7 @@ img {
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
   transition: all 0.3s ease;
   cursor: pointer;
+  text-decoration: none;
 }
 
 .contact-float:hover {

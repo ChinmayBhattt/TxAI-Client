@@ -46,14 +46,8 @@ export default function Footer() {
         <div className="footer-links-col">
           <h4 className="footer-heading">Destinations</h4>
           <ul className="footer-list">
-            <li><a href="#">Goa</a></li>
-            <li><a href="#">Alibaug</a></li>
-            <li><a href="#">Lonavala</a></li>
-            <li><a href="#">Igatpuri</a></li>
-            <li><a href="#">Karjat</a></li>
-            <li><a href="#">Panchgani</a></li>
-            <li><a href="#">Nashik</a></li>
-            <li><a href="#">Ooty</a></li>
+            <li><a href="/villa/vistara-villa">Vistara Villa</a></li>
+            <li><a href="/villa/amora-villa">Amora Villa</a></li>
           </ul>
         </div>
 
@@ -67,13 +61,13 @@ export default function Footer() {
         </div>
 
         <div className="footer-links-col">
-          <h4 className="footer-heading">Support</h4>
-          <ul className="footer-list">
+          {/* <h4 className="footer-heading">Support</h4> */}
+          {/* <ul className="footer-list">
             <li><a href="/contact">Help Centre</a></li>
             <li><a href="#">Cancellation Policy</a></li>
             <li><a href="#">Terms &amp; Conditions</a></li>
             <li><a href="#">Privacy Policy</a></li>
-          </ul>
+          </ul> */}
           <h4 className="footer-heading" style={{ marginTop: "24px" }}>Contact</h4>
           <ul className="footer-list">
             <li>
