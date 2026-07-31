@@ -6,6 +6,7 @@ import Navbar from "../../components/Navbar";
 import ContactFloat from "../../components/ContactFloat";
 import BookingModal from "../../components/BookingModal";
 import { calculateStayPricing } from "../../utils/pricing";
+import { isVillaSaved, toggleSaveVilla } from "../../utils/savedVillas";
 
 function StarRating({ rating, size = 16 }) {
   return (
@@ -28,6 +29,7 @@ export default function VillaDetailClient({ villa }) {
   const [faqOpen, setFaqOpen] = useState(null);
   const [scrolled, setScrolled] = useState(false);
   const [bookingModalOpen, setBookingModalOpen] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
 
   // Tags horizontal scroll ref
   const tagsRef = useRef(null);
@@ -58,8 +60,11 @@ export default function VillaDetailClient({ villa }) {
       if (paramGuests) setGuests(parseInt(paramGuests, 10));
     }
 
+    // Check if villa is saved
+    setIsSaved(isVillaSaved(villa.slug));
+
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [villa.slug]);
 
   // Real-time Tariff calculations (dynamic weekday/weekend pricing)
   const pricing = calculateStayPricing(villa.slug, checkIn, checkOut);
@@ -76,9 +81,24 @@ export default function VillaDetailClient({ villa }) {
       <Navbar />
 
       <main className="vd-page">
-        {/* Title + Rating */}
+        {/* Title + Rating + Save */}
         <div className="vd-header">
-          <h1 className="vd-title">Staycation Villas - {villa.name}</h1>
+          <div className="vd-title-save-row">
+            <h1 className="vd-title">Staycation Villas - {villa.name}</h1>
+            <button
+              onClick={() => {
+                const nowSaved = toggleSaveVilla(villa.slug);
+                setIsSaved(nowSaved);
+              }}
+              className={`vd-save-btn ${isSaved ? "saved" : ""}`}
+              title={isSaved ? "Remove from saved" : "Save to favorites"}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill={isSaved ? "#dc2626" : "none"} stroke={isSaved ? "#dc2626" : "currentColor"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+              </svg>
+              <span>{isSaved ? "Saved" : "Save Villa"}</span>
+            </button>
+          </div>
           <div className="vd-rating-row">
             <StarRating rating={villa.rating} />
             <span className="vd-rating-number">{villa.rating}</span>

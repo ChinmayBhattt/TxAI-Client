@@ -128,17 +128,23 @@ export default function Navbar() {
               <Dropdown isOpen={userMenuOpen}>
                 <div className="dropdown-list">
                   <div className="user-email-header">{user.email}</div>
-                  <a href="#" className="dropdown-list-item">
-                    My Bookings
-                  </a>
-                  <a href="#" className="dropdown-list-item">
-                    Saved Villas
+                  <a href="/account" className="dropdown-list-item dropdown-account-link">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                      <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    <span>My Account</span>
                   </a>
                   <button
                     onClick={handleLogout}
                     className="dropdown-list-item dropdown-logout-btn"
                   >
-                    Log Out
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                      <polyline points="16 17 21 12 16 7"></polyline>
+                      <line x1="21" y1="12" x2="9" y2="12"></line>
+                    </svg>
+                    <span>Log Out</span>
                   </button>
                 </div>
               </Dropdown>
