@@ -5,6 +5,7 @@ import TopBanner from "../../components/TopBanner";
 import Navbar from "../../components/Navbar";
 import ContactFloat from "../../components/ContactFloat";
 import BookingModal from "../../components/BookingModal";
+import { calculateStayPricing } from "../../utils/pricing";
 
 function StarRating({ rating, size = 16 }) {
   return (
@@ -60,18 +61,9 @@ export default function VillaDetailClient({ villa }) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Real-time Tariff calculations
-  const calculateNights = () => {
-    if (!checkIn || !checkOut) return 1;
-    const start = new Date(checkIn);
-    const end = new Date(checkOut);
-    const diff = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
-    return diff > 0 ? diff : 1;
-  };
-
-  const nights = calculateNights();
-  const baseRate = parseInt(villa.price.replace(/[^0-9]/g, ""), 10) || 22000;
-  const subtotal = baseRate * nights;
+  // Real-time Tariff calculations (dynamic weekday/weekend pricing)
+  const pricing = calculateStayPricing(villa.slug, checkIn, checkOut);
+  const { nights, weekdayNights, weekendNights, weekdayRate, weekendRate, subtotal, hasBlackout } = pricing;
   const gst = Math.round(subtotal * 0.18);
   const totalAmount = subtotal + gst;
 
@@ -444,21 +436,40 @@ export default function VillaDetailClient({ villa }) {
               {/* REAL-TIME TARIFF CALCULATOR BOX */}
               <div className="vd-tariff">
                 <div className="vd-tariff-label">REAL-TIME TARIFF BREAKDOWN</div>
-                <div className="vd-tariff-calc-rows">
-                  <div className="vd-calc-row">
-                    <span>₹{baseRate.toLocaleString("en-IN")} × {nights} night(s)</span>
-                    <span>₹{subtotal.toLocaleString("en-IN")}</span>
+
+                {hasBlackout && (
+                  <div className="vd-blackout-warning">
+                    ⚠️ Selected dates include a holiday / long weekend.
+                    Pricing is not available online.
+                    <a href={`tel:${villa.hostPhone}`} className="vd-blackout-cta">Call us for rates →</a>
                   </div>
-                  <div className="vd-calc-row">
-                    <span>GST &amp; Service Fee (18%)</span>
-                    <span>₹{gst.toLocaleString("en-IN")}</span>
+                )}
+
+                {!hasBlackout && (
+                  <div className="vd-tariff-calc-rows">
+                    {weekdayNights > 0 && (
+                      <div className="vd-calc-row">
+                        <span>₹{weekdayRate.toLocaleString("en-IN")} × {weekdayNights} weekday night{weekdayNights > 1 ? "s" : ""}</span>
+                        <span>₹{(weekdayRate * weekdayNights).toLocaleString("en-IN")}</span>
+                      </div>
+                    )}
+                    {weekendNights > 0 && (
+                      <div className="vd-calc-row">
+                        <span>₹{weekendRate.toLocaleString("en-IN")} × {weekendNights} weekend night{weekendNights > 1 ? "s" : ""}</span>
+                        <span>₹{(weekendRate * weekendNights).toLocaleString("en-IN")}</span>
+                      </div>
+                    )}
+                    <div className="vd-calc-row">
+                      <span>GST &amp; Service Fee (18%)</span>
+                      <span>₹{gst.toLocaleString("en-IN")}</span>
+                    </div>
+                    <div className="vd-calc-divider" />
+                    <div className="vd-calc-total">
+                      <span>Total Price</span>
+                      <span className="vd-total-highlight">₹{totalAmount.toLocaleString("en-IN")}</span>
+                    </div>
                   </div>
-                  <div className="vd-calc-divider" />
-                  <div className="vd-calc-total">
-                    <span>Total Price</span>
-                    <span className="vd-total-highlight">₹{totalAmount.toLocaleString("en-IN")}</span>
-                  </div>
-                </div>
+                )}
               </div>
 
               <p className="vd-best-rate">
