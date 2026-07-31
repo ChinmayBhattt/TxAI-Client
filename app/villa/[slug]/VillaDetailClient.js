@@ -39,9 +39,9 @@ export default function VillaDetailClient({ villa }) {
   };
 
   // Real-time booking state for sidebar
-  const [checkIn, setCheckIn] = useState("2026-08-01");
-  const [checkOut, setCheckOut] = useState("2026-08-03");
-  const [guests, setGuests] = useState(2);
+  const [checkIn, setCheckIn] = useState("");
+  const [checkOut, setCheckOut] = useState("");
+  const [guests, setGuests] = useState("");
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 100);
@@ -426,12 +426,12 @@ export default function VillaDetailClient({ villa }) {
                 </div>
               </div>
 
-              <button className="vd-special-offer-btn" onClick={() => setBookingModalOpen(true)}>
+              {/* <button className="vd-special-offer-btn" onClick={() => setBookingModalOpen(true)}>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18">
                   <path d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
                 SWIPE FOR SPECIAL OFFER
-              </button>
+              </button> */}
 
               {/* REAL-TIME TARIFF CALCULATOR BOX */}
               <div className="vd-tariff">
