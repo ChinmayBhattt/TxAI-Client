@@ -82,6 +82,33 @@ export default function BookingModal({
     setStep(2); // Go to QR payment step
   };
 
+  // ─── Send booking details to owner via WhatsApp ───
+  const notifyOwnerWhatsApp = (bId) => {
+    const ownerPhone = "918082088000";
+    const message = `🏡 *NEW BOOKING ALERT*
+
+📋 *Booking ID:* ${bId}
+🏠 *Villa:* ${villa.name}
+📍 *Location:* ${villa.location}
+
+📅 *Check-In:* ${checkIn}
+📅 *Check-Out:* ${checkOut}
+👥 *Guests:* ${guests}
+
+👤 *Guest Name:* ${guestName}
+📧 *Email:* ${guestEmail}
+📞 *Phone:* ${guestPhone}
+
+💰 *Total Amount:* ₹${totalAmount.toLocaleString("en-IN")}
+💳 *Payment Method:* UPI QR
+⏰ *Booked At:* ${new Date().toLocaleString("en-IN")}
+
+Please verify payment and confirm.`;
+
+    const waUrl = `https://wa.me/${ownerPhone}?text=${encodeURIComponent(message)}`;
+    window.open(waUrl, "_blank");
+  };
+
   // ─── STEP 2 → User clicked "I have paid" — save booking & confirm ───
   const handleConfirmPayment = async () => {
     setLoading(true);
@@ -106,6 +133,12 @@ export default function BookingModal({
         user_id: user ? user.id : null,
         created_at: new Date().toISOString(),
       }]);
+
+      // Auto-download receipt for the user
+      setTimeout(() => downloadReceipt(), 500);
+
+      // Send booking details to owner via WhatsApp
+      notifyOwnerWhatsApp(bookingId);
 
       setStep(3); // Confirmation screen
     } catch (err) {

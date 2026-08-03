@@ -11,7 +11,7 @@ export default function Footer() {
           <p className="footer-tagline"> </p>
           <p className="footer-desc">
             India&apos;s most trusted villa holiday brand. Handpicked stays
-            across 18+ destinations, managed end-to-end for your perfect
+            across India, managed end-to-end for your perfect
             getaway.
           </p>
           <div className="footer-socials">

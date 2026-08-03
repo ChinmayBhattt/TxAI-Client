@@ -5,28 +5,28 @@ import { useState } from "react";
 const testimonials = [
   {
     name: "Priya & Rahul M.",
-    location: "Stayed at Brooklyn, Igatpuri",
+    location: "Stayed at Staycation Villas, Igatpuri",
     rating: 5,
     text: "The villa exceeded every expectation. Waking up to misty mountains with a private pool was surreal. Staycation Villas's attention to detail — from the welcome hamper to the perfectly stocked kitchen — made it feel like a true luxury retreat.",
     date: "June 2025",
   },
   {
     name: "Ananya S.",
-    location: "Stayed at 7 Palms, Alibaug",
+    location: "Stayed at Staycation Villas, Alibaug",
     rating: 5,
     text: "We hosted a family reunion here and it was absolutely perfect. Seven bedrooms, gorgeous interiors, and the staff arranged a private BBQ by the pool. Can't recommend Staycation Villas enough for large group getaways.",
     date: "May 2025",
   },
   {
     name: "Vikram & Neha K.",
-    location: "Stayed at Vanamora, Nashik",
+    location: "Stayed at Staycation Villas, Nashik",
     rating: 5,
-    text: "Vanamora is a hidden paradise. The vineyard views, the infinity pool, and the quiet — it was exactly the digital detox we needed. Booking through Staycation Villas was seamless and hassle-free.",
+    text: "A hidden paradise. The vineyard views, the infinity pool, and the quiet — it was exactly the digital detox we needed. Booking through Staycation Villas was seamless and hassle-free.",
     date: "April 2025",
   },
   {
     name: "Arjun D.",
-    location: "Stayed at Alpha Villa, Igatpuri",
+    location: "Stayed at Staycation Villas, Igatpuri",
     rating: 4,
     text: "Great value for money. Clean, well-maintained, and the caretaker was incredibly helpful. Perfect for a quick weekend escape from Mumbai. Already planning our next visit!",
     date: "March 2025",

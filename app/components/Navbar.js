@@ -106,10 +106,12 @@ export default function Navbar() {
         </div>
 
         <div className={`navbar-links ${mobileOpen ? "mobile-open" : ""}`}>
-          <a href="/villa/vistara-villa">Vistara Villa</a>
-          <a href="/villa/amora-villa">Amora Villa</a>
+          <a href="/villa/amora-villa">Amora</a>
+          <a href="/villa/vistara-villa">Vistara</a>
 
           <a href="/about-us">About Us</a>
+
+          <a href="/contact">Partner with Us</a>
 
           <a href="https://www.chhuttimanao.com">Membership</a>
 

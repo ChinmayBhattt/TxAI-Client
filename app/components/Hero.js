@@ -113,7 +113,7 @@ export default function Hero() {
               value={guests}
               onChange={(e) => setGuests(parseInt(e.target.value, 10))}
             >
-              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((num) => (
+              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
                 <option key={num} value={num}>
                   {num} {num === 1 ? "Guest" : "Guests"}
                 </option>
