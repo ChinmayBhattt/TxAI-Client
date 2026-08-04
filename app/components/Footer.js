@@ -6,7 +6,7 @@ export default function Footer() {
         <div className="footer-brand">
           <div className="footer-logo">
             <img src="/images/logo.png" alt="Staycation Villas Logo" className="footer-logo-img" />
-            <span>Staycation Villas</span>
+            {/* <span>Staycation Villas</span> */}
           </div>
           <p className="footer-tagline"> </p>
           <p className="footer-desc">
