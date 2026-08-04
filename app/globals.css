@@ -5999,14 +5999,19 @@ img {
   box-shadow: 0 6px 16px rgba(5, 150, 105, 0.3);
 }
 
-.site-btn {
-  background: rgba(255, 255, 255, 0.1);
+.site-btn,
+.email-btn {
+  background: rgba(255, 255, 255, 0.08);
   color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  justify-content: center;
+  width: 100%;
 }
 
-.site-btn:hover {
-  background: rgba(255, 255, 255, 0.2);
+.site-btn:hover,
+.email-btn:hover {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.35);
   transform: translateY(-2px);
 }
 
