@@ -101,7 +101,6 @@ export default function Navbar() {
         <div className="navbar-brand">
           <a href="/" className="brand-link">
             <img src="/images/logo.png" alt="Staycation Villas Logo" className="brand-logo" />
-            <span className="brand-name">Stay.Relax.Refresh</span>
           </a>
         </div>
 
