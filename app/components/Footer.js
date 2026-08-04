@@ -74,7 +74,7 @@ export default function Footer() {
               <a href="tel:+918082088000">📞 +91 80820 88000</a>
             </li>
             <li>
-              <a href="https://www.chhuttimanao.com" target="_blank" rel="noopener noreferrer">🌐 www.chhuttimanao.com</a>
+              <a href="https://www.chhuttimanao.com" target="_blank" rel="noopener noreferrer">www.chhuttimanao.com</a>
             </li>
           </ul>
         </div>

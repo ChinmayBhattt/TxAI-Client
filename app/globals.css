@@ -2304,11 +2304,13 @@ img {
 }
 
 .footer-logo-img {
-  height: 130px;
+  height: 120px;
   width: auto;
-  max-width: 150px;
   object-fit: contain;
   border-radius: 16px;
+  background: #ffffff;
+  padding: 12px 24px;
+  box-sizing: border-box;
 }
 
 .footer-tagline {
