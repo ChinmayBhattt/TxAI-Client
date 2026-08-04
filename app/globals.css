@@ -2290,33 +2290,25 @@ img {
   gap: 36px;
 }
 
-.footer-social-icons-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-top: 8px;
-}
-
-.social-icon-btn {
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  display: flex;
+.footer-social-row {
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  color: var(--color-white, #ffffff);
-  transition: all 0.3s ease;
+  gap: 10px;
+  color: rgba(255, 255, 255, 0.7);
   text-decoration: none;
+  font-size: 14px;
+  transition: all 0.3s ease;
 }
 
-.social-icon-btn:hover {
-  background: var(--color-primary, #c5a059);
-  border-color: var(--color-primary, #c5a059);
-  color: #ffffff;
-  transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(197, 160, 89, 0.3);
+.footer-social-row:hover {
+  color: var(--color-primary, #c5a059);
+  transform: translateX(3px);
+}
+
+.footer-social-row svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
 }
 
 .social-icon-btn svg {
@@ -5725,9 +5717,15 @@ img {
   }
 }
 
-.founder-image-card {
+.founder-image-col {
   position: sticky;
   top: 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.founder-image-card {
   border-radius: 20px;
   overflow: hidden;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
@@ -5755,18 +5753,27 @@ img {
   flex-direction: column;
 }
 
-.founder-tag-title {
-  font-family: var(--font-heading, "Playfair Display", Georgia, serif);
-  font-size: 22px;
-  font-weight: 600;
-  color: var(--color-dark, #111827);
+.founder-card-content {
+  padding: 28px;
+  background: linear-gradient(135deg, #111827 0%, #1f2937 100%);
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
-.founder-tag-role {
-  font-size: 14px;
+.founder-card-header {
+  display: flex;
+  flex-direction: column;
+}
+
+.founder-card-content .founder-tag-title {
+  color: #ffffff;
+  font-size: 24px;
+}
+
+.founder-card-content .founder-tag-role {
   color: var(--color-gold, #c5a059);
-  font-weight: 500;
-  margin-top: 2px;
 }
 
 .founder-info-col {
