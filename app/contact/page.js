@@ -43,7 +43,7 @@ export default function ContactPage() {
             <div className="contact-perk">
               <span className="contact-perk-icon">🏡</span>
               <div>
-                <strong> managed villas</strong>
+                <strong> Managed villas</strong>
                 <p>One team, every destination across India</p>
               </div>
             </div>
