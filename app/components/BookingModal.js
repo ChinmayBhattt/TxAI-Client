@@ -85,25 +85,28 @@ export default function BookingModal({
   // ─── Send booking details to owner via WhatsApp ───
   const notifyOwnerWhatsApp = (bId) => {
     const ownerPhone = "918082088000";
-    const message = `🏡 *NEW BOOKING ALERT*
+    const message = `✨ *NEW BOOKING ALERT*
 
-📋 *Booking ID:* ${bId}
-🏠 *Villa:* ${villa.name}
-📍 *Location:* ${villa.location}
+📌 *Booking ID:* ${bId}
+📌 *Villa:* ${villa.name}
+📌 *Location:* ${villa.location}
 
-📅 *Check-In:* ${checkIn}
-📅 *Check-Out:* ${checkOut}
-👥 *Guests:* ${guests}
+📌 *Check-In:* ${checkIn}
+📌 *Check-Out:* ${checkOut}
+📌 *Guests:* ${guests}
 
-👤 *Guest Name:* ${guestName}
-📧 *Email:* ${guestEmail}
-📞 *Phone:* ${guestPhone}
+📌 *Guest Name:* ${guestName}
+📌 *Email:* ${guestEmail}
+📌 *Phone:* ${guestPhone}
 
-💰 *Total Amount:* ₹${totalAmount.toLocaleString("en-IN")}
-💳 *Payment Method:* UPI QR
-⏰ *Booked At:* ${new Date().toLocaleString("en-IN")}
+📌 *Total Amount:* ₹${totalAmount.toLocaleString("en-IN")}
+📌 *Payment Method:* UPI QR
+📌 *Booked At:* ${new Date().toLocaleString("en-IN")}
 
-Please verify payment and confirm.`;
+Please verify payment and confirm.
+
+Bookings once made cannot be cancelled 
+No show no refund`;
 
     const waUrl = `https://wa.me/${ownerPhone}?text=${encodeURIComponent(message)}`;
     window.open(waUrl, "_blank");
