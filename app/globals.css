@@ -495,32 +495,24 @@ img {
 }
 
 .hero-subtitle {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   gap: 16px;
-  margin-bottom: 24px;
-  padding: 10px 24px;
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 100px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-  width: fit-content;
+  margin-bottom: 20px;
 }
 
 .hero-line {
-  width: 28px;
-  height: 1.5px;
-  background: rgba(255, 255, 255, 0.8);
+  width: 40px;
+  height: 2px;
+  background: #ffffff;
 }
 
 .hero-subtitle span {
-  font-size: 12px;
-  letter-spacing: 3px;
+  font-size: 13px;
+  letter-spacing: 4px;
   text-transform: uppercase;
   color: #ffffff;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .hero-title {
@@ -2283,10 +2275,10 @@ img {
 }
 
 .footer-logo-img {
+  width: 130px;
   height: 130px;
-  max-height: 150px;
-  width: auto;
-  object-fit: contain;
+  object-fit: cover;
+  border-radius: 50%;
 }
 
 .footer-tagline {

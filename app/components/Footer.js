@@ -5,7 +5,7 @@ export default function Footer() {
         {/* Brand column */}
         <div className="footer-brand">
           <div className="footer-logo">
-            <img src="/images/logo.png" alt="Staycation Villas Logo" className="footer-logo-img" />
+            <img src="/images/footer-logo.png" alt="Staycation Villas Logo" className="footer-logo-img" />
             {/* <span>Staycation Villas</span> */}
           </div>
           <p className="footer-tagline"> </p>
