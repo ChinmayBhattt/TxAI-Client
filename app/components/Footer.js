@@ -15,7 +15,7 @@ export default function Footer() {
             getaway.
           </p>
           <div className="footer-socials">
-            <a
+            {/* <a
               href="https://www.instagram.com/staycationvillas?utm_source=qr&igsh=MWg3ODlscHdwcmwyYg=="
               target="_blank"
               rel="noopener noreferrer"
@@ -27,8 +27,8 @@ export default function Footer() {
                 <circle cx="12" cy="12" r="5" />
                 <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none" />
               </svg>
-            </a>
-            <a
+            </a> */}
+            {/* <a
               href="https://www.facebook.com/share/1Fybc2CeSa/"
               target="_blank"
               rel="noopener noreferrer"
@@ -37,8 +37,8 @@ export default function Footer() {
             >
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                 <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z" />
-              </svg>
-            </a>
+              </svg> */}
+            {/* </a> */}
           </div>
         </div>
 
