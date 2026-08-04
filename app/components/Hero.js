@@ -61,7 +61,8 @@ export default function Hero() {
       <div className="hero-content">
         <div className="hero-subtitle">
           <div className="hero-line" />
-          <span>Stay Relax Refresh · India</span>
+          <span><b> Stay Relax Refresh</b></span>
+          <div className="hero-line" />
         </div>
 
         <h1 className="hero-title">

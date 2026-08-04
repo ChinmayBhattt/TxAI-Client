@@ -107,13 +107,12 @@ export default function Navbar() {
         <div className={`navbar-links ${mobileOpen ? "mobile-open" : ""}`}>
           <a href="/villa/amora-villa">Amora</a>
           <a href="/villa/vistara-villa">Vistara</a>
-
           <a href="/about-us">About Us</a>
-
           <a href="/contact">Partner with Us</a>
-
           <a href="https://www.chhuttimanao.com">Membership</a>
+        </div>
 
+        <div className="navbar-actions">
           {user ? (
             <div className="nav-dropdown-wrapper">
               <button
@@ -158,17 +157,17 @@ export default function Navbar() {
               Login
             </button>
           )}
-        </div>
 
-        <button
-          className="mobile-toggle"
-          aria-label="Open menu"
-          onClick={() => setMobileOpen(!mobileOpen)}
-        >
-          <span />
-          <span />
-          <span />
-        </button>
+          <button
+            className="mobile-toggle"
+            aria-label="Open menu"
+            onClick={() => setMobileOpen(!mobileOpen)}
+          >
+            <span />
+            <span />
+            <span />
+          </button>
+        </div>
       </nav>
 
       {/* Supabase Auth Modal */}
