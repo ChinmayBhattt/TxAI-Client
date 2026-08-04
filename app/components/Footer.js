@@ -68,13 +68,19 @@ export default function Footer() {
             <li><a href="#">Terms &amp; Conditions</a></li>
             <li><a href="#">Privacy Policy</a></li>
           </ul> */}
-          <h4 className="footer-heading" style={{ marginTop: "24px" }}>Contact</h4>
+          <h4 className="footer-heading">Contact</h4>
           <ul className="footer-list">
             <li>
               <a href="tel:+918082088000">+91 80820 88000</a>
             </li>
+             <li>
+              <a href="tel:+9180820660000">+91 8082066000</a>
+            </li>
+               <li>
+              <a href="tel:+919594578888">+91 9594578888</a>
+            </li>
             <li>
-              <a href="https://www.chhuttimanao.com" target="_blank" rel="noopener noreferrer">www.chhuttimanao.com</a>
+              <a href="staycationvillas@gmail.com" target="_blank" rel="noopener noreferrer">staycationvillas@gmail.com</a>
             </li>
           </ul>
         </div>
