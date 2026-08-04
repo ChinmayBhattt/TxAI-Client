@@ -123,7 +123,7 @@ export default function AboutUsPage() {
                     rel="noopener noreferrer"
                     className="founder-contact-btn site-btn"
                   >
-                    🌐 www.chhuttimanao.com
+                    www.chhuttimanao.com
                   </a>
                 </div>
 
