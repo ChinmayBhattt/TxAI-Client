@@ -37,35 +37,32 @@ export default function Hero() {
     );
   };
 
-  // Typewriter effect state
-  const words = ["STAY", "RELAX", "REFRESH"];
-  const [wordIndex, setWordIndex] = useState(0);
+  // Typewriter effect state for full phrase
+  const fullPhrase = "STAY  RELAX  REFRESH";
   const [currentText, setCurrentText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
-    const target = words[wordIndex];
-    const speed = isDeleting ? 45 : 100;
+    const speed = isDeleting ? 40 : 85;
 
     const timeout = setTimeout(() => {
       if (!isDeleting) {
-        const nextText = target.substring(0, currentText.length + 1);
+        const nextText = fullPhrase.substring(0, currentText.length + 1);
         setCurrentText(nextText);
-        if (nextText === target) {
-          setTimeout(() => setIsDeleting(true), 1500);
+        if (nextText === fullPhrase) {
+          setTimeout(() => setIsDeleting(true), 2500);
         }
       } else {
-        const nextText = target.substring(0, currentText.length - 1);
+        const nextText = fullPhrase.substring(0, currentText.length - 1);
         setCurrentText(nextText);
         if (nextText === "") {
           setIsDeleting(false);
-          setWordIndex((prev) => (prev + 1) % words.length);
         }
       }
     }, speed);
 
     return () => clearTimeout(timeout);
-  }, [currentText, isDeleting, wordIndex]);
+  }, [currentText, isDeleting]);
 
   return (
     <section className="hero" id="hero">
