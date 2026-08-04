@@ -142,3 +142,11 @@ export default function ContactPage() {
     </>
   );
 }
+
+// https://www.instagram.com/chhuttimanao7?utm_source=qr&igsh=bXd2dWxsM2xocjg0
+
+// https://www.instagram.com/staycationvillas?utm_source=qr&igsh=MWg3ODlscHdwcmwyYg==
+
+// https://www.facebook.com/share/197PiNtUo3/
+
+// https://www.facebook.com/share/1Fybc2CeSa/

@@ -57,6 +57,10 @@ export default function Footer() {
             <li><a href="/about-us">About Us</a></li>
             <li><a href="https://www.chhuttimanao.com" target="_blank" rel="noopener noreferrer">Membership</a></li>
             <li><a href="/contact">Contact Us</a></li>
+            <li><a href="https://www.instagram.com/staycationvillas?utm_source=qr&igsh=MWg3ODlscHdwcmwyYg==" target="_blank" rel="noopener noreferrer">Instagram (Staycation Villas)</a></li>
+            <li><a href="https://www.instagram.com/chhuttimanao7?utm_source=qr&igsh=bXd2dWxsM2xocjg0" target="_blank" rel="noopener noreferrer">Instagram (Chhutti Manao)</a></li>
+            <li><a href="https://www.facebook.com/share/1Fybc2CeSa/" target="_blank" rel="noopener noreferrer">Facebook (Staycation Villas)</a></li>
+            <li><a href="https://www.facebook.com/share/197PiNtUo3/" target="_blank" rel="noopener noreferrer">Facebook (Chhutti Manao)</a></li>
           </ul>
         </div>
 
