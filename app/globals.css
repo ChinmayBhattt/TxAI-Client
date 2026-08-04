@@ -5635,7 +5635,7 @@ img {
 
 .founder-grid {
   display: grid;
-  grid-template-columns: 420px 1fr;
+  grid-template-columns: 480px 1fr;
   gap: 60px;
   align-items: start;
 }
@@ -5659,9 +5659,8 @@ img {
 
 .founder-img {
   width: 100%;
-  height: 520px;
-  object-fit: cover;
-  object-position: top center;
+  height: auto;
+  object-fit: contain;
   display: block;
   transition: transform 0.5s ease;
 }
