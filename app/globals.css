@@ -523,6 +523,26 @@ img {
   font-weight: 600;
 }
 
+.typewriter-text {
+  min-width: 100px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.typewriter-cursor {
+  display: inline-block;
+  margin-left: 2px;
+  font-weight: 300;
+  color: #ffffff;
+  animation: blinkCursor 0.7s infinite;
+}
+
+@keyframes blinkCursor {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
 .hero-title {
   font-family: var(--font-heading);
   font-size: clamp(42px, 5vw, 64px);

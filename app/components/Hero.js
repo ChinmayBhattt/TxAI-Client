@@ -37,6 +37,36 @@ export default function Hero() {
     );
   };
 
+  // Typewriter effect state
+  const words = ["STAY", "RELAX", "REFRESH"];
+  const [wordIndex, setWordIndex] = useState(0);
+  const [currentText, setCurrentText] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  useEffect(() => {
+    const target = words[wordIndex];
+    const speed = isDeleting ? 45 : 100;
+
+    const timeout = setTimeout(() => {
+      if (!isDeleting) {
+        const nextText = target.substring(0, currentText.length + 1);
+        setCurrentText(nextText);
+        if (nextText === target) {
+          setTimeout(() => setIsDeleting(true), 1500);
+        }
+      } else {
+        const nextText = target.substring(0, currentText.length - 1);
+        setCurrentText(nextText);
+        if (nextText === "") {
+          setIsDeleting(false);
+          setWordIndex((prev) => (prev + 1) % words.length);
+        }
+      }
+    }, speed);
+
+    return () => clearTimeout(timeout);
+  }, [currentText, isDeleting, wordIndex]);
+
   return (
     <section className="hero" id="hero">
       <div className="hero-bg">
@@ -61,7 +91,10 @@ export default function Hero() {
       <div className="hero-content">
         <div className="hero-subtitle">
           <div className="hero-line" />
-          <span><b> Stay Relax Refresh</b></span>
+          <span className="typewriter-text">
+            <b>{currentText}</b>
+            <span className="typewriter-cursor">|</span>
+          </span>
           <div className="hero-line" />
         </div>
 
