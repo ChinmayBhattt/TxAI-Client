@@ -138,7 +138,7 @@ export function calculateStayPricing(villaSlug, checkInStr, checkOutStr) {
   const start = new Date(checkInStr + "T00:00:00");
   const end = new Date(checkOutStr + "T00:00:00");
 
-  if (end <= start) {
+  if (end < start) {
     return {
       nights: 1,
       weekdayNights: 1,
@@ -148,6 +148,22 @@ export function calculateStayPricing(villaSlug, checkInStr, checkOutStr) {
       subtotal: rates.weekday,
       perNightBreakdown: [],
       hasBlackout: false,
+    };
+  }
+
+  if (start.getTime() === end.getTime()) {
+    const ds = toDateStr(start);
+    const isWknd = isWeekendNight(ds);
+    const rate = isWknd ? rates.weekend : rates.weekday;
+    return {
+      nights: 1,
+      weekdayNights: isWknd ? 0 : 1,
+      weekendNights: isWknd ? 1 : 0,
+      weekdayRate: rates.weekday,
+      weekendRate: rates.weekend,
+      subtotal: rate,
+      perNightBreakdown: [{ date: ds, isWeekend: isWknd, rate }],
+      hasBlackout: BLACKOUT_DATES.has(ds),
     };
   }
 

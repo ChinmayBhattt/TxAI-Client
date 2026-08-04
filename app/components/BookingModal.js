@@ -71,8 +71,8 @@ export default function BookingModal({
     }
     const start = new Date(checkIn);
     const end = new Date(checkOut);
-    if (end <= start) {
-      setError("Check-out date must be after check-in date.");
+    if (end < start) {
+      setError("Check-out date cannot be before check-in date.");
       return;
     }
 
