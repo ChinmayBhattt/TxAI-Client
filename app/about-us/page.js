@@ -62,20 +62,20 @@ export default function AboutUsPage() {
                   <div className="founder-contact-links">
                     <div className="founder-phones-row">
                       <a href="tel:+918082088000" className="founder-contact-btn phone-btn">
-                        📞 +91 80820 88000
+                        +91 80820 88000
                       </a>
                       <a href="tel:+918082066000" className="founder-contact-btn phone-btn">
-                        📞 +91 8082066000
+                        +91 8082066000
                       </a>
                       <a href="tel:+919594578888" className="founder-contact-btn phone-btn">
-                        📞 +91 9594578888
+                        +91 9594578888
                       </a>
                     </div>
                     <a
                       href="mailto:sachingandhi0712@gmail.com"
                       className="founder-contact-btn email-btn"
                     >
-                      ✉️ sachingandhi0712@gmail.com
+                      sachingandhi0712@gmail.com
                     </a>
                   </div>
 
