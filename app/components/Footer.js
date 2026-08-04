@@ -46,8 +46,8 @@ export default function Footer() {
         <div className="footer-links-col">
           <h4 className="footer-heading">Destinations</h4>
           <ul className="footer-list">
-            <li><a href="/villa/vistara-villa">Vistara Villa</a></li>
             <li><a href="/villa/amora-villa">Amora Villa</a></li>
+            <li><a href="/villa/vistara-villa">Vistara Villa</a></li>
           </ul>
         </div>
 
