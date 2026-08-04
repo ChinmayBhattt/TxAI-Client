@@ -90,7 +90,6 @@ export default function Hero() {
           <div className="hero-line" />
           <span className="typewriter-text">
             <b>{currentText}</b>
-            <span className="typewriter-cursor">|</span>
           </span>
           <div className="hero-line" />
         </div>
