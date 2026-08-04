@@ -60,15 +60,17 @@ export default function AboutUsPage() {
                   </div>
 
                   <div className="founder-contact-links">
-                    <a href="tel:+918082088000" className="founder-contact-btn phone-btn">
-                      📞 +91 80820 88000
-                    </a>
-                    <a href="tel:+918082066000" className="founder-contact-btn phone-btn">
-                      📞 +91 8082066000
-                    </a>
-                    <a href="tel:+919594578888" className="founder-contact-btn phone-btn">
-                      📞 +91 9594578888
-                    </a>
+                    <div className="founder-phones-row">
+                      <a href="tel:+918082088000" className="founder-contact-btn phone-btn">
+                        📞 +91 80820 88000
+                      </a>
+                      <a href="tel:+918082066000" className="founder-contact-btn phone-btn">
+                        📞 +91 8082066000
+                      </a>
+                      <a href="tel:+919594578888" className="founder-contact-btn phone-btn">
+                        📞 +91 9594578888
+                      </a>
+                    </div>
                     <a
                       href="https://www.chhuttimanao.com"
                       target="_blank"
