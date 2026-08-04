@@ -4339,6 +4339,7 @@ img {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 30px;
+  align-items: start;
 }
 
 .contact-card {
@@ -5991,26 +5992,27 @@ img {
 .founder-phones-row {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   width: 100%;
 }
 
 .founder-phones-row .phone-btn {
   flex: 1;
+  min-width: 0;
   justify-content: center;
-  padding: 10px 6px;
-  font-size: 11.5px;
+  padding: 8px 4px;
+  font-size: 11px;
   white-space: nowrap;
-  gap: 4px;
+  gap: 2px;
 }
 
 .founder-contact-btn {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  padding: 12px 20px;
+  gap: 8px;
+  padding: 10px 14px;
   border-radius: 10px;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
   text-decoration: none;
   transition: all 0.2s ease;
@@ -6034,6 +6036,7 @@ img {
   border: 1px solid rgba(255, 255, 255, 0.18);
   justify-content: center;
   width: 100%;
+  box-sizing: border-box;
 }
 
 .site-btn:hover,
@@ -6045,7 +6048,8 @@ img {
 
 .founder-socials {
   display: flex;
-  gap: 16px;
+  gap: 8px;
+  flex-wrap: wrap;
   padding-top: 12px;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
@@ -6053,20 +6057,105 @@ img {
 .social-btn {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
+  justify-content: center;
+  flex: 1;
+  min-width: 85px;
+  gap: 6px;
+  padding: 8px 8px;
   border-radius: 8px;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 500;
   color: #d1d5db;
   background: rgba(255, 255, 255, 0.05);
   text-decoration: none;
   transition: background 0.2s, color 0.2s;
+  white-space: nowrap;
 }
 
 .social-btn:hover {
   color: #ffffff;
   background: rgba(255, 255, 255, 0.15);
+}
+
+.founder-card-clean {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.founder-clean-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  margin: 16px 0 20px;
+}
+
+.founder-clean-email {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: var(--color-off-white, #f9fafb);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-dark, #111827);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.founder-clean-email:hover {
+  background: rgba(197, 160, 89, 0.1);
+  border-color: var(--color-gold, #c5a059);
+  color: var(--color-gold, #c5a059);
+}
+
+.founder-clean-phones {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
+}
+
+.founder-clean-phones a {
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.founder-clean-phones a:hover {
+  color: var(--color-gold, #c5a059);
+}
+
+.founder-clean-socials {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  width: 100%;
+  padding-top: 16px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.founder-clean-socials a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #6b7280;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.founder-clean-socials a:hover {
+  color: var(--color-gold, #c5a059);
 }
 
 /* ===== BLACKOUT / HOLIDAY DATE WARNINGS ===== */
