@@ -71,7 +71,7 @@ export default function Footer() {
           <h4 className="footer-heading" style={{ marginTop: "24px" }}>Contact</h4>
           <ul className="footer-list">
             <li>
-              <a href="tel:+918082088000">📞 +91 80820 88000</a>
+              <a href="tel:+918082088000">+91 80820 88000</a>
             </li>
             <li>
               <a href="https://www.chhuttimanao.com" target="_blank" rel="noopener noreferrer">www.chhuttimanao.com</a>
