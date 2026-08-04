@@ -2304,10 +2304,11 @@ img {
 }
 
 .footer-logo-img {
-  width: 130px;
   height: 130px;
-  object-fit: cover;
-  border-radius: 50%;
+  width: auto;
+  max-width: 150px;
+  object-fit: contain;
+  border-radius: 16px;
 }
 
 .footer-tagline {
