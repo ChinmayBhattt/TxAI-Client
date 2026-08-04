@@ -65,7 +65,7 @@ export default function AboutUsPage() {
               <div className="founder-header">
                 <span className="founder-eyebrow">FOUNDER &amp; LEADER</span>
                 <h2 className="founder-name">Sachhin Gandhi</h2>
-                <div className="founder-designation">Founder, Chhutti Manao</div>
+                {/* <div className="founder-designation">Founder, Chhutti Manao</div> */}
               </div>
 
               {/* About Me Section */}
