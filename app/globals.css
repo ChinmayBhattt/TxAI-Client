@@ -1583,8 +1583,12 @@ img {
   }
   
   .hero {
-    min-height: 600px;
+    height: auto;
+    min-height: 100vh;
+    min-height: 100dvh;
+    padding-top: 140px;
     padding-bottom: 60px;
+    align-items: flex-end;
   }
   
   .hero-content {
@@ -5752,6 +5756,13 @@ img {
   display: flex;
   flex-direction: column;
   gap: 24px;
+}
+
+@media (max-width: 992px) {
+  .founder-image-col {
+    position: relative;
+    top: auto;
+  }
 }
 
 .founder-image-card {

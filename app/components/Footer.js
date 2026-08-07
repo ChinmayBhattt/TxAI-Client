@@ -67,10 +67,10 @@ export default function Footer() {
               <a href="tel:+918082088000">+91 80820 88000</a>
             </li>
             <li>
-              <a href="tel:+9180820660000">+91 8082066000</a>
+              <a href="tel:+918082066000">+91 80820 66000</a>
             </li>
             <li>
-              <a href="tel:+919594578888">+91 9594578888</a>
+              <a href="tel:+919594578888">+91 95945 78888</a>
             </li>
             <li>
               <a href="mailto:staycationvillas@gmail.com">staycationvillas@gmail.com</a>

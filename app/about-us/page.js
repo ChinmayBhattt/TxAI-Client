@@ -65,10 +65,10 @@ export default function AboutUsPage() {
                         +91 80820 88000
                       </a>
                       <a href="tel:+918082066000" className="founder-contact-btn phone-btn">
-                        +91 8082066000
+                        +91 80820 66000
                       </a>
                       <a href="tel:+919594578888" className="founder-contact-btn phone-btn">
-                        +91 9594578888
+                        +91 95945 78888
                       </a>
                     </div>
                     <a
