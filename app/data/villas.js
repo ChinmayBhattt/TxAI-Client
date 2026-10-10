@@ -53,10 +53,10 @@ export const villaData = {
       { icon: "🎵", name: "Music System" },
     ],
     experiences: [
-      { name: "Event Decor", price: "₹10,000", image: "/images/vistara-3.png" },
-      { name: "Live Singer", price: "₹18,000", image: "/images/vistara-2.png" },
-      { name: "Bonfire", price: "₹2,000", image: "/images/vistara-1.png" },
-      { name: "Bartender", price: "₹8,000", image: "/images/vistara-4.png" },
+      { name: "Live Singer", price: "₹18,000", image: "/images/special-singer.png" },
+      { name: "Bonfire", price: "₹2,000", image: "/images/special-bonfire.png" },
+      { name: "Massage", price: "₹5,000", image: "/images/special-massage.png" },
+      { name: "Bartender", price: "₹8,000", image: "/images/special-bartender.png" },
     ],
     customerReviews: [
       { name: "Surali", rating: 5, text: "Your service is ok", date: "28/07/2026" },
@@ -138,10 +138,10 @@ export const villaData = {
       { icon: "🚗", name: "Street Parking" },
     ],
     experiences: [
-      { name: "Event Decor", price: "₹10,000", image: "/images/amora-3.png" },
-      { name: "Live Singer", price: "₹18,000", image: "/images/amora-2.png" },
-      { name: "Bonfire", price: "₹2,000", image: "/images/amora-1.png" },
-      { name: "Bartender", price: "₹8,000", image: "/images/amora-4.png" },
+      { name: "Live Singer", price: "₹18,000", image: "/images/special-singer.png" },
+      { name: "Bonfire", price: "₹2,000", image: "/images/special-bonfire.png" },
+      { name: "Massage", price: "₹5,000", image: "/images/special-massage.png" },
+      { name: "Bartender", price: "₹8,000", image: "/images/special-bartender.png" },
     ],
     customerReviews: [
       { name: "Manish", rating: 5, text: "Hall and swimming pool was great", date: "27/07/2026" },
