@@ -20,6 +20,10 @@ export default function BookingModal({
   const [guestEmail, setGuestEmail] = useState("");
   const [guestPhone, setGuestPhone] = useState("");
   const [bookingId, setBookingId] = useState("");
+  const [transactionDate, setTransactionDate] = useState(
+    new Date().toISOString().split("T")[0]
+  );
+  const [utrNumber, setUtrNumber] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -48,6 +52,8 @@ export default function BookingModal({
       setStep(1);
       setError("");
       setLoading(false);
+      setUtrNumber("");
+      setTransactionDate(new Date().toISOString().split("T")[0]);
     }
   }, [isOpen]);
 
@@ -83,7 +89,7 @@ export default function BookingModal({
   };
 
   // ─── Send booking details to owner via WhatsApp ───
-  const notifyOwnerWhatsApp = (bId) => {
+  const notifyOwnerWhatsApp = (bId, utr, txnDate) => {
     const ownerPhone = "918082088000";
     const message = `*NEW BOOKING ALERT*
 
@@ -101,11 +107,13 @@ export default function BookingModal({
 
 - *Total Amount:* ₹${totalAmount.toLocaleString("en-IN")}
 - *Payment Method:* UPI QR
-- *Booked At:* ${new Date().toLocaleString("en-IN")}
+- *Transaction Date:* ${txnDate || transactionDate}
+- *UTR / Ref No:* ${utr || utrNumber}
+- *Submitted At:* ${new Date().toLocaleString("en-IN")}
 
 Please verify payment and confirm.
 
-This is tentative booking Final confirmation shall be given within next 3 hours post verification of payments and availability
+This is tentative booking. Final confirmation shall be given within next 3 hours post verification of payments and availability.
 
 Bookings once made cannot be cancelled 
 No show no refund
@@ -115,15 +123,26 @@ No show no refund
     window.open(waUrl, "_blank");
   };
 
-  // ─── STEP 2 → User clicked "I have paid" — save booking & confirm ───
-  const handleConfirmPayment = async () => {
+  // ─── STEP 2 → User clicked "I have paid" — validate UTR, save booking & confirm ───
+  const handleConfirmPayment = async (e) => {
+    if (e && e.preventDefault) e.preventDefault();
+
+    if (!transactionDate) {
+      setError("Please select the Transaction Date.");
+      return;
+    }
+    if (!utrNumber || utrNumber.trim().length < 4) {
+      setError("Please enter the 12-digit UTR / UPI Reference ID from your payment app.");
+      return;
+    }
+
     setLoading(true);
     setError("");
 
     try {
       const { data: { user } } = await supabase.auth.getUser();
 
-      await supabase.from("bookings").insert([{
+      const bookingRecord = {
         booking_id: bookingId,
         villa_name: villa.name,
         villa_slug: villa.slug,
@@ -135,16 +154,34 @@ No show no refund
         guest_phone: guestPhone,
         total_amount: totalAmount,
         payment_method: "UPI QR",
+        transaction_date: transactionDate,
+        utr: utrNumber.trim(),
         status: "confirmed",
         user_id: user ? user.id : null,
         created_at: new Date().toISOString(),
-      }]);
+      };
 
-      // Auto-download receipt for the user
-      setTimeout(() => downloadReceipt(), 500);
+      try {
+        await supabase.from("bookings").insert([bookingRecord]);
+      } catch (sbErr) {
+        console.warn("Supabase insert warning:", sbErr);
+      }
+
+      try {
+        const existing = JSON.parse(localStorage.getItem("staycation_bookings") || "[]");
+        localStorage.setItem(
+          "staycation_bookings",
+          JSON.stringify([bookingRecord, ...existing])
+        );
+      } catch (lsErr) {
+        console.warn("localStorage save error:", lsErr);
+      }
+
+      // Auto-download receipt for the user with all details
+      setTimeout(() => downloadReceipt(), 400);
 
       // Send booking details to owner via WhatsApp
-      notifyOwnerWhatsApp(bookingId);
+      notifyOwnerWhatsApp(bookingId, utrNumber.trim(), transactionDate);
 
       setStep(3); // Confirmation screen
     } catch (err) {
@@ -161,8 +198,8 @@ No show no refund
            STAYCATION VILLAS — RECEIPT
 ==================================================
 Booking ID:       ${bookingId}
-Date:             ${new Date().toLocaleDateString("en-IN")}
-Status:           ✅ CONFIRMED
+Booking Date:     ${new Date().toLocaleDateString("en-IN")}
+Status:           ✅ CONFIRMED (AWAITING VERIFICATION)
 --------------------------------------------------
 PROPERTY
 Villa:            ${villa.name}
@@ -172,17 +209,21 @@ Check-Out:        ${checkOut}  (11:00 AM)
 Nights:           ${nights}
 Guests:           ${guests}
 --------------------------------------------------
-GUEST
+GUEST DETAILS
 Name:             ${guestName}
 Email:            ${guestEmail}
 Phone:            ${guestPhone}
+--------------------------------------------------
+PAYMENT DETAILS
+Payment Method:   UPI QR
+Transaction Date: ${transactionDate}
+UTR / Ref No:     ${utrNumber}
 --------------------------------------------------
 PAYMENT BREAKDOWN${weekdayNights > 0 ? `\nWeekday Nights:   ₹${(weekdayRate * weekdayNights).toLocaleString("en-IN")}  (${weekdayNights} × ₹${weekdayRate.toLocaleString("en-IN")})` : ""}${weekendNights > 0 ? `\nWeekend Nights:   ₹${(weekendRate * weekendNights).toLocaleString("en-IN")}  (${weekendNights} × ₹${weekendRate.toLocaleString("en-IN")})` : ""}
 Subtotal:         ₹${subtotal.toLocaleString("en-IN")}
 GST (18%):        ₹${taxes.toLocaleString("en-IN")}
                   ────────────
 TOTAL PAID:       ₹${totalAmount.toLocaleString("en-IN")}
-Payment Method:   UPI QR
 ==================================================
 Thank you for choosing Staycation Villas!
 Support:  ‪+91 80820 88000‬
@@ -395,6 +436,38 @@ Support:  ‪+91 80820 88000‬
                 </div>
               </div>
 
+              {/* Mandatory Transaction Date and UTR Number Inputs */}
+              <div className="bm-payment-verification-box">
+                <div className="bm-pv-title">
+                  <span>PAYMENT VERIFICATION DETAILS</span>
+                  <span className="bm-pv-required-tag">MANDATORY</span>
+                </div>
+
+                <div className="bm-field" style={{ marginBottom: "14px" }}>
+                  <label>TRANSACTION DATE *</label>
+                  <input
+                    type="date"
+                    value={transactionDate}
+                    onChange={(e) => setTransactionDate(e.target.value)}
+                    required
+                  />
+                </div>
+
+                <div className="bm-field">
+                  <label>UTR / UPI TRANSACTION ID *</label>
+                  <input
+                    type="text"
+                    placeholder="e.g. 12-digit UTR (428901234567)"
+                    value={utrNumber}
+                    onChange={(e) => setUtrNumber(e.target.value)}
+                    required
+                  />
+                  <small className="bm-field-hint">
+                    Found in your UPI app (GPay / PhonePe / Paytm) after completing payment
+                  </small>
+                </div>
+              </div>
+
               {/* Confirm payment button */}
               <button
                 type="button"
@@ -412,7 +485,7 @@ Support:  ‪+91 80820 88000‬
               </button>
 
               <p className="bm-secure-note">
-                🔒 After payment, click the button above to confirm your booking.
+                🔒 After payment, enter your UTR and click the button above to confirm.
                 <br />
                 Your booking will be verified by our team.
               </p>
@@ -462,6 +535,10 @@ Support:  ‪+91 80820 88000‬
                 <strong>{guestEmail}</strong>
               </div>
               <div className="bm-confirm-row">
+                <span>Phone:</span>
+                <strong>{guestPhone}</strong>
+              </div>
+              <div className="bm-confirm-row">
                 <span>Amount Paid:</span>
                 <strong className="bm-highlight-green">
                   ₹{totalAmount.toLocaleString("en-IN")}
@@ -470,6 +547,16 @@ Support:  ‪+91 80820 88000‬
               <div className="bm-confirm-row">
                 <span>Payment:</span>
                 <strong>UPI QR</strong>
+              </div>
+              <div className="bm-confirm-row">
+                <span>Transaction Date:</span>
+                <strong>{transactionDate}</strong>
+              </div>
+              <div className="bm-confirm-row">
+                <span>UTR / Ref No:</span>
+                <strong style={{ fontFamily: "monospace", letterSpacing: "1px" }}>
+                  {utrNumber}
+                </strong>
               </div>
             </div>
 

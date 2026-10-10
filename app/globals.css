@@ -5609,6 +5609,43 @@ img {
   max-width: 60%;
 }
 
+.bm-payment-verification-box {
+  background: #fdfbf7;
+  border: 1.5px solid rgba(197, 160, 89, 0.4);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.bm-pv-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  font-weight: 800;
+  color: var(--color-dark);
+  margin-bottom: 14px;
+}
+
+.bm-pv-required-tag {
+  background: #dc2626;
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 2px 7px;
+  border-radius: 6px;
+}
+
+.bm-field-hint {
+  font-size: 11px;
+  color: var(--color-text-muted);
+  margin-top: 3px;
+  display: block;
+}
+
 .bm-confirm-paid-btn {
   width: 100%;
   display: flex;

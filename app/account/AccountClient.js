@@ -70,8 +70,21 @@ export default function AccountClient() {
 
   const fetchUserBookings = async (currentUser) => {
     setBookingsLoading(true);
+    let allBookings = [];
     try {
-      // Query bookings matching user_id or guest_email
+      const local = JSON.parse(localStorage.getItem("staycation_bookings") || "[]");
+      if (Array.isArray(local)) {
+        allBookings = local.filter(
+          (b) =>
+            !currentUser?.email ||
+            b.guest_email?.toLowerCase() === currentUser?.email?.toLowerCase()
+        );
+      }
+    } catch (e) {
+      // ignore
+    }
+
+    try {
       let query = supabase.from("bookings").select("*").order("created_at", { ascending: false });
 
       if (currentUser?.id && currentUser?.email) {
@@ -81,10 +94,18 @@ export default function AccountClient() {
       }
 
       const { data, error } = await query;
-      if (error) throw error;
-      setBookings(data || []);
+      if (!error && data && data.length > 0) {
+        const map = new Map();
+        [...data, ...allBookings].forEach((b) => {
+          if (b.booking_id && !map.has(b.booking_id)) map.set(b.booking_id, b);
+        });
+        setBookings(Array.from(map.values()));
+        return;
+      }
+      setBookings(allBookings);
     } catch (err) {
       console.error("Error fetching bookings:", err);
+      setBookings(allBookings);
     } finally {
       setBookingsLoading(false);
     }
@@ -162,7 +183,7 @@ Phone:            ${b.guest_phone || "N/A"}
 --------------------------------------------------
 PAYMENT
 Total Amount:     ₹${Number(b.total_amount).toLocaleString("en-IN")}
-Payment Method:   ${b.payment_method || "UPI QR"}
+Payment Method:   ${b.payment_method || "UPI QR"}${b.transaction_date ? `\nTransaction Date: ${b.transaction_date}` : ""}${b.utr ? `\nUTR / Ref No:     ${b.utr}` : ""}
 ==================================================
 Thank you for choosing Staycation Villas!
 Support:  ‪+91 80820 88000‬
@@ -303,6 +324,18 @@ Support:  ‪+91 80820 88000‬
                           <span>Payment Method</span>
                           <strong>{b.payment_method || "UPI QR"}</strong>
                         </div>
+                        {b.utr && (
+                          <div className="booking-detail-row">
+                            <span>UTR / Ref No</span>
+                            <strong style={{ fontFamily: "monospace" }}>{b.utr}</strong>
+                          </div>
+                        )}
+                        {b.transaction_date && (
+                          <div className="booking-detail-row">
+                            <span>Txn Date</span>
+                            <strong>{b.transaction_date}</strong>
+                          </div>
+                        )}
                       </div>
 
                       <div className="booking-card-footer">
