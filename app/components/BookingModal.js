@@ -180,13 +180,14 @@ No show no refund
       // Auto-download receipt for the user with all details
       setTimeout(() => downloadReceipt(), 400);
 
-      // Send confirmation email to customer via Resend
-      fetch("/api/send-booking-email", {
+      // Send approval request email to owner (with Approve & Reject buttons)
+      fetch("/api/send-booking-request", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           customer_name: guestName,
           customer_email: guestEmail,
+          customer_phone: guestPhone,
           booking_id: bookingId,
           villa_name: villa.name,
           villa_location: villa.location,
@@ -196,13 +197,15 @@ No show no refund
           check_out_time: "11:00 AM",
           number_of_guests: guests,
           total_amount: totalAmount,
+          transaction_date: transactionDate,
+          utr: utrNumber.trim(),
           website_name: "Staycation Villas",
           website_url: "https://staycationvillas.co",
           support_email: "staycationvillas26@gmail.com",
           support_phone: "‪+91 80820 88000‬",
         }),
       }).catch((emailErr) => {
-        console.warn("Failed to send booking email:", emailErr);
+        console.warn("Failed to send booking approval request to owner:", emailErr);
       });
 
       // Send booking details to owner via WhatsApp
