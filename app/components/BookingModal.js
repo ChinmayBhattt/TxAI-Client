@@ -400,11 +400,11 @@ Support:  ‪+91 80820 88000‬
 
               <button
                 type="submit"
-                className="bm-primary-btn"
+                className={`bm-primary-btn ${hasBlackout ? "vd-sold-out-btn" : ""}`}
                 disabled={hasBlackout}
               >
                 {hasBlackout
-                  ? "CALL US FOR HOLIDAY PRICING"
+                  ? "SOLD OUT FOR YOUR SELECTED DATES"
                   : `PROCEED TO PAY ₹${totalAmount.toLocaleString("en-IN")} →`}
               </button>
             </form>

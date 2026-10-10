@@ -24,7 +24,12 @@ function StarRating({ rating, size = 16 }) {
   );
 }
 
-export default function VillaDetailClient({ villa }) {
+export default function VillaDetailClient({
+  villa,
+  initialCheckIn = "",
+  initialCheckOut = "",
+  initialGuests = "",
+}) {
   const [showAllPhotos, setShowAllPhotos] = useState(false);
   const [faqOpen, setFaqOpen] = useState(null);
   const [scrolled, setScrolled] = useState(false);
@@ -41,15 +46,15 @@ export default function VillaDetailClient({ villa }) {
   };
 
   // Real-time booking state for sidebar
-  const [checkIn, setCheckIn] = useState("");
-  const [checkOut, setCheckOut] = useState("");
-  const [guests, setGuests] = useState("");
+  const [checkIn, setCheckIn] = useState(initialCheckIn);
+  const [checkOut, setCheckOut] = useState(initialCheckOut);
+  const [guests, setGuests] = useState(initialGuests || "");
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 100);
     window.addEventListener("scroll", handleScroll);
 
-    // Read URL search params from search bar redirect
+    // Read URL search params from search bar redirect if props weren't passed
     if (typeof window !== "undefined") {
       const params = new URLSearchParams(window.location.search);
       const paramCheckIn = params.get("checkIn");
@@ -66,11 +71,40 @@ export default function VillaDetailClient({ villa }) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [villa.slug]);
 
+  // Availability state
+  const [blockedRanges, setBlockedRanges] = useState([]);
+
+  useEffect(() => {
+    fetch(`/api/availability?villa=${villa.slug}`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.blockedDates) setBlockedRanges(data.blockedDates);
+      })
+      .catch(() => {});
+  }, [villa.slug]);
+
+  // Check if selected dates overlap with any blocked iCal ranges
+  const isDateRangeBlocked = (startStr, endStr) => {
+    if (!startStr || !endStr) return false;
+    const start = new Date(startStr);
+    const end = new Date(endStr);
+    return blockedRanges.some((range) => {
+      const bStart = new Date(range.start);
+      const bEnd = new Date(range.end);
+      return start < bEnd && end > bStart;
+    });
+  };
+
   // Real-time Tariff calculations (dynamic weekday/weekend pricing)
   const pricing = calculateStayPricing(villa.slug, checkIn, checkOut);
   const { nights, weekdayNights, weekendNights, weekdayRate, weekendRate, subtotal, hasBlackout } = pricing;
   const gst = Math.round(subtotal * 0.18);
   const totalAmount = subtotal + gst;
+
+  const isSoldOut = Boolean(
+    (checkIn && checkOut) &&
+    (hasBlackout || isDateRangeBlocked(checkIn, checkOut))
+  );
 
   return (
     <>
@@ -446,26 +480,34 @@ export default function VillaDetailClient({ villa }) {
                 </div>
               </div>
 
-              {/* <button className="vd-special-offer-btn" onClick={() => setBookingModalOpen(true)}>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18">
-                  <path d="M5 12h14M12 5l7 7-7 7" />
-                </svg>
-                SWIPE FOR SPECIAL OFFER
-              </button> */}
+              {/* SWIPE FOR SPECIAL OFFER */}
+              <div
+                className="vd-swipe-offer-bar"
+                onClick={() => !isSoldOut && setBookingModalOpen(true)}
+              >
+                <div className="vd-swipe-arrow">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" width="16" height="16">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </div>
+                <span>SWIPE FOR SPECIAL OFFER</span>
+              </div>
 
               {/* REAL-TIME TARIFF CALCULATOR BOX */}
               <div className="vd-tariff">
                 <div className="vd-tariff-label">REAL-TIME TARIFF BREAKDOWN</div>
 
-                {hasBlackout && (
-                  <div className="vd-blackout-warning">
-                    ⚠️ Selected dates include a holiday / long weekend.
-                    Pricing is not available online.
-                    <a href={`tel:${villa.hostPhone}`} className="vd-blackout-cta">Call us for rates →</a>
+                {isSoldOut ? (
+                  <div className="vd-soldout-box">
+                    <span className="vd-soldout-badge">⚠️ SOLD OUT</span>
+                    <p className="vd-soldout-msg">
+                      This property is completely booked or unavailable for your selected dates.
+                    </p>
+                    <a href={`tel:${villa.hostPhone}`} className="vd-soldout-call-cta">
+                      📞 Call Host for Availability →
+                    </a>
                   </div>
-                )}
-
-                {!hasBlackout && (
+                ) : (
                   <div className="vd-tariff-calc-rows">
                     {weekdayNights > 0 && (
                       <div className="vd-calc-row">
@@ -497,12 +539,26 @@ export default function VillaDetailClient({ villa }) {
                 be given on phone.
               </p>
 
-              <button className="vd-book-btn" onClick={() => setBookingModalOpen(true)}>
-                BOOK NOW — ₹{totalAmount.toLocaleString("en-IN")}
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18">
-                  <path d="M5 12h14M12 5l7 7-7 7" />
-                </svg>
-              </button>
+              {isSoldOut ? (
+                <button
+                  type="button"
+                  className="vd-book-btn vd-sold-out-btn"
+                  disabled
+                >
+                  SOLD OUT FOR YOUR SELECTED DATES
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  className="vd-book-btn"
+                  onClick={() => setBookingModalOpen(true)}
+                >
+                  BOOK NOW — ₹{totalAmount.toLocaleString("en-IN")}
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="18" height="18">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </button>
+              )}
 
               <div className="vd-secure-payment">
                 <div className="vd-secure-text">

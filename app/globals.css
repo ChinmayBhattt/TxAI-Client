@@ -3449,6 +3449,104 @@ img {
   transform: scale(1.02);
 }
 
+.vd-sold-out-btn,
+.vd-book-btn.vd-sold-out-btn {
+  background: #de6a45 !important;
+  color: #ffffff !important;
+  cursor: not-allowed !important;
+  transform: none !important;
+  box-shadow: 0 4px 14px rgba(222, 106, 69, 0.25) !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.8px !important;
+  border-radius: 28px !important;
+  padding: 16px 20px !important;
+  font-size: 13.5px !important;
+  text-transform: uppercase !important;
+  opacity: 0.95;
+}
+
+.vd-sold-out-btn:hover,
+.vd-book-btn.vd-sold-out-btn:hover {
+  background: #de6a45 !important;
+  transform: none !important;
+  box-shadow: 0 4px 14px rgba(222, 106, 69, 0.25) !important;
+}
+
+.vd-swipe-offer-bar {
+  display: flex;
+  align-items: center;
+  background: #f0ede6;
+  border-radius: 28px;
+  padding: 6px 16px 6px 8px;
+  gap: 12px;
+  margin-bottom: 16px;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.2s ease;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.vd-swipe-offer-bar:hover {
+  background: #e9e5dc;
+}
+
+.vd-swipe-arrow {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #1e293b;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  flex-shrink: 0;
+}
+
+.vd-swipe-offer-bar span {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #334155;
+  text-transform: uppercase;
+}
+
+.vd-soldout-box {
+  background: #fff7ed;
+  border: 1.5px dashed #f97316;
+  border-radius: 12px;
+  padding: 14px 16px;
+  text-align: center;
+  margin-top: 8px;
+}
+
+.vd-soldout-badge {
+  display: inline-block;
+  background: #de6a45;
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  padding: 3px 10px;
+  border-radius: 12px;
+  margin-bottom: 8px;
+}
+
+.vd-soldout-msg {
+  font-size: 13px;
+  color: #7c2d12;
+  line-height: 1.5;
+  margin: 0 0 8px;
+}
+
+.vd-soldout-call-cta {
+  display: inline-block;
+  color: #c2410c;
+  font-weight: 700;
+  font-size: 13px;
+  text-decoration: underline;
+}
+
 .vd-secure-payment {
   text-align: center;
   margin-bottom: 20px;

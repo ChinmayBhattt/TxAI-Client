@@ -16,10 +16,18 @@ export async function generateMetadata({ params }) {
   };
 }
 
-export default async function VillaPage({ params }) {
+export default async function VillaPage({ params, searchParams }) {
   const { slug } = await params;
+  const sParams = searchParams ? await searchParams : {};
   const villa = getVilla(slug);
   if (!villa) notFound();
 
-  return <VillaDetailClient villa={villa} />;
+  return (
+    <VillaDetailClient
+      villa={villa}
+      initialCheckIn={sParams?.checkIn || ""}
+      initialCheckOut={sParams?.checkOut || ""}
+      initialGuests={sParams?.guests ? parseInt(sParams.guests, 10) : 2}
+    />
+  );
 }

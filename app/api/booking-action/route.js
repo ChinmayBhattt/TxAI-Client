@@ -191,7 +191,7 @@ ${booking.website_url}
 </html>
       `.trim();
 
-      await resend.emails.send({
+      const { data: sendData, error: sendError } = await resend.emails.send({
         from: fromAddress,
         to: booking.customer_email,
         subject: `Your Villa Booking Is Confirmed! 🎉 [${booking.booking_id}]`,
@@ -199,17 +199,51 @@ ${booking.website_url}
         html: htmlContent,
       });
 
+      let alertNotice = null;
+
+      if (sendError) {
+        console.warn("[resend] Primary recipient send error:", sendError);
+
+        // If Resend test mode blocks sending to non-owner email, forward copy to owner
+        if (
+          sendError.message?.includes("only send testing emails to your own email address") ||
+          sendError.statusCode === 403
+        ) {
+          alertNotice = `⚠️ <strong>Resend Test Mode Alert:</strong> Resend ke testing mode me bina domain verify kiye direct customer (${booking.customer_email}) ko email nahi jaata. Humne ye confirmation email aapke email (<strong>${process.env.OWNER_EMAIL || "chinmaybhatt26@gmail.com"}</strong>) par forward kar diya hai. Direct customer ko mail bhejne ke liye <strong>resend.com/domains</strong> par domain verify karein.`;
+
+          await resend.emails.send({
+            from: fromAddress,
+            to: process.env.OWNER_EMAIL || "chinmaybhatt26@gmail.com",
+            subject: `[FORWARD TO CUSTOMER: ${booking.customer_email}] Your Villa Booking Is Confirmed! 🎉 [${booking.booking_id}]`,
+            text: `NOTE: Forward this email to ${booking.customer_email}\n\n` + textContent,
+            html: `
+              <div style="background: #fef3c7; border: 2px solid #f59e0b; padding: 16px; border-radius: 10px; margin-bottom: 20px; font-family: sans-serif; font-size: 14px; color: #92400e; line-height: 1.5;">
+                <strong>⚠️ RESEND TEST MODE — FORWARD TO CUSTOMER</strong><br>
+                Resend testing mode me direct customer (<strong>${booking.customer_email}</strong>) ko deliver nahi hua kyunki custom domain verify hona baaki hai.<br>
+                Aap ye email directly <strong>${booking.customer_email}</strong> ko forward kar sakte hain.
+              </div>
+            ` + htmlContent,
+          });
+        } else {
+          alertNotice = `Email delivery notice: ${sendError.message}`;
+        }
+      }
+
       // Record status
       recordBookingActionStatus(booking.booking_id, "approved", {
         customerEmail: booking.customer_email,
         villaName: booking.villa_name,
+        emailDeliveredDirectly: !sendError,
       });
 
       return renderResponseHtml({
         title: "Booking Approved Successfully! 🎉",
         badge: "APPROVED & CONFIRMED",
         badgeColor: "#16a34a",
-        message: `Confirmation email has been dispatched to <strong>${booking.customer_name}</strong> at <strong>${booking.customer_email}</strong>.`,
+        message: sendError
+          ? `Booking status confirmed! Check test mode alert below.`
+          : `Confirmation email has been dispatched directly to <strong>${booking.customer_name}</strong> at <strong>${booking.customer_email}</strong>.`,
+        alertNotice,
         booking,
       });
 
@@ -310,7 +344,7 @@ ${booking.website_url}
 </html>
       `.trim();
 
-      await resend.emails.send({
+      const { data: rejectData, error: rejectError } = await resend.emails.send({
         from: fromAddress,
         to: booking.customer_email,
         subject: `Booking Request Update [${booking.booking_id}] - ${booking.website_name}`,
@@ -318,17 +352,46 @@ ${booking.website_url}
         html: rejectHtml,
       });
 
+      let rejectAlert = null;
+      if (rejectError) {
+        console.warn("[resend] Primary recipient reject error:", rejectError);
+        if (
+          rejectError.message?.includes("only send testing emails to your own email address") ||
+          rejectError.statusCode === 403
+        ) {
+          rejectAlert = `⚠️ <strong>Resend Test Mode:</strong> Customer (${booking.customer_email}) ko direct email deliver nahi hua. Email copy aapke email (<strong>${process.env.OWNER_EMAIL || "chinmaybhatt26@gmail.com"}</strong>) par forward kar diya gaya hai.`;
+
+          await resend.emails.send({
+            from: fromAddress,
+            to: process.env.OWNER_EMAIL || "chinmaybhatt26@gmail.com",
+            subject: `[FORWARD TO CUSTOMER: ${booking.customer_email}] Booking Request Update [${booking.booking_id}]`,
+            text: `NOTE: Forward this email to ${booking.customer_email}\n\n` + rejectText,
+            html: `
+              <div style="background: #fee2e2; border: 2px solid #ef4444; padding: 16px; border-radius: 10px; margin-bottom: 20px; font-family: sans-serif; font-size: 14px; color: #991b1b; line-height: 1.5;">
+                <strong>⚠️ RESEND TEST MODE — FORWARD TO CUSTOMER</strong><br>
+                Resend testing mode me direct customer (<strong>${booking.customer_email}</strong>) ko deliver nahi hua.<br>
+                Aap ye email <strong>${booking.customer_email}</strong> ko forward kar sakte hain.
+              </div>
+            ` + rejectHtml,
+          });
+        }
+      }
+
       // Record status
       recordBookingActionStatus(booking.booking_id, "rejected", {
         customerEmail: booking.customer_email,
         villaName: booking.villa_name,
+        emailDeliveredDirectly: !rejectError,
       });
 
       return renderResponseHtml({
         title: "Booking Rejected",
         badge: "REJECTED",
         badgeColor: "#dc2626",
-        message: `Rejection notice has been emailed to <strong>${booking.customer_name}</strong> at <strong>${booking.customer_email}</strong>.`,
+        message: rejectError
+          ? `Booking request rejected. Check test mode alert below.`
+          : `Rejection notice has been emailed to <strong>${booking.customer_name}</strong> at <strong>${booking.customer_email}</strong>.`,
+        alertNotice: rejectAlert,
         booking,
       });
     }
@@ -346,7 +409,7 @@ ${booking.website_url}
 /**
  * Returns a styled HTML response page for the owner's browser.
  */
-function renderResponseHtml({ title, badge, badgeColor, message, booking }) {
+function renderResponseHtml({ title, badge, badgeColor, message, alertNotice, booking }) {
   const html = `
 <!DOCTYPE html>
 <html lang="en">
@@ -370,7 +433,7 @@ function renderResponseHtml({ title, badge, badgeColor, message, booking }) {
       background: #1e293b;
       border: 1px solid #334155;
       border-radius: 20px;
-      max-width: 540px;
+      max-width: 560px;
       width: 100%;
       padding: 36px;
       box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
@@ -397,7 +460,18 @@ function renderResponseHtml({ title, badge, badgeColor, message, booking }) {
       color: #94a3b8;
       font-size: 15px;
       line-height: 1.6;
-      margin: 0 0 24px;
+      margin: 0 0 20px;
+    }
+    .alert-banner {
+      background: rgba(245, 158, 11, 0.15);
+      border: 1.5px solid #f59e0b;
+      border-radius: 12px;
+      padding: 14px 18px;
+      color: #fbbf24;
+      font-size: 13.5px;
+      line-height: 1.55;
+      text-align: left;
+      margin-bottom: 24px;
     }
     .details {
       background: #0f172a;
@@ -444,6 +518,8 @@ function renderResponseHtml({ title, badge, badgeColor, message, booking }) {
     <div class="badge">${badge}</div>
     <h1>${title}</h1>
     <p>${message}</p>
+
+    ${alertNotice ? `<div class="alert-banner">${alertNotice}</div>` : ""}
 
     ${
       booking
