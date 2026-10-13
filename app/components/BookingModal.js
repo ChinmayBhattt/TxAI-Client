@@ -91,33 +91,56 @@ export default function BookingModal({
   // ─── Send booking details to owner via WhatsApp ───
   const notifyOwnerWhatsApp = (bId, utr, txnDate) => {
     const ownerPhone = "918082088000";
-    const message = `*NEW BOOKING ALERT*
 
-- *Booking ID:* ${bId}
-- *Villa:* ${villa.name}
-- *Location:* ${villa.location}
+    const formatDate = (dateStr) => {
+      if (!dateStr) return "";
+      const d = new Date(dateStr.includes("T") ? dateStr : `${dateStr}T00:00:00`);
+      if (isNaN(d.getTime())) return dateStr;
+      return d.toLocaleDateString("en-GB", { day: "2-digit", month: "long", year: "numeric" });
+    };
 
-- *Check-In:* ${checkIn}
-- *Check-Out:* ${checkOut}
-- *Guests:* ${guests}
+    const formatDateTime = (date = new Date()) => {
+      const d = new Date(date);
+      const datePart = d.toLocaleDateString("en-GB", { day: "2-digit", month: "long", year: "numeric" });
+      const timePart = d.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", second: "2-digit", hour12: true });
+      return `${datePart}, ${timePart}`;
+    };
 
-- *Guest Name:* ${guestName}
-- *Email:* ${guestEmail}
-- *Phone:* ${guestPhone}
+    const message = `*NEW BOOKING REQUEST*
 
-- *Total Amount:* ₹${totalAmount.toLocaleString("en-IN")}
-- *Payment Method:* UPI QR
-- *Transaction Date:* ${txnDate || transactionDate}
-- *UTR / Ref No:* ${utr || utrNumber}
-- *Submitted At:* ${new Date().toLocaleString("en-IN")}
+* *Booking ID:* ${bId}
 
-Please verify payment and confirm.
+* *Villa:* ${villa.name}
 
-This is tentative booking. Final confirmation shall be given within next 3 hours post verification of payments and availability.
+* *Location:* ${villa.location}
 
-Bookings once made cannot be cancelled 
-No show no refund
-3% credit card charges apply`;
+* *Check-In:* ${formatDate(checkIn)}
+
+* *Check-Out:* ${formatDate(checkOut)}
+
+* *Guests:* ${guests}
+
+* *Guest Name:* ${guestName}
+
+* *Email:* ${guestEmail}
+
+* *Phone:* ${guestPhone}
+
+* *Total Amount:* ₹${totalAmount.toLocaleString("en-IN")}
+
+* *Payment Method:* UPI QR
+
+* *Transaction Date:* ${formatDate(txnDate || transactionDate)}
+
+* *UTR / Reference No.:* ${utr || utrNumber}
+
+* *Booking Submitted At:* ${formatDateTime()}
+
+I have submitted my booking request for ${villa.name} and have been redirected after completing the booking process. The above details serve as my booking reference and payment details.
+
+Kindly verify my payment and check the availability of the villa, and confirm my booking within the next 24 hours.
+
+Thank you!`;
 
     const waUrl = `https://wa.me/${ownerPhone}?text=${encodeURIComponent(message)}`;
     window.open(waUrl, "_blank");
